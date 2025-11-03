@@ -23,6 +23,7 @@ import { RouterOutlet } from '@angular/router';
       align: center;
     }
     main {
+      background-image: url("/assets/backgrounds/odm-interface.jpg");
       padding: 2rem 4rem;
       display: flex;
       justify-content: center; 
