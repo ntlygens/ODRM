@@ -5,11 +5,9 @@
 /tmp
 /out-tsc
 /bazel-out
-/node_modules
-/server/node_modules
-/client/node_modules
 
 # Node
+/node_modules
 npm-debug.log
 yarn-error.log
 
@@ -17,7 +15,6 @@ yarn-error.log
 .idea/
 .project
 .classpath
-.package-lock.json
 .c9/
 *.launch
 .settings/
