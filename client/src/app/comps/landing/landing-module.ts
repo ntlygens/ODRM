@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 
 import { LandingPg } from './landing-pg';
 import { LandingPgForm } from './landing-pg-form';
+import { LandingScreen } from './landing-screen';
 
 import { AddUiData } from './add-ui-data';
 import { EditUiData } from './edit-ui-data';
@@ -22,8 +23,10 @@ import { EditUiData } from './edit-ui-data';
   declarations: [
     LandingPg,
     LandingPgForm,
+    LandingScreen,
     AddUiData,
     EditUiData,
+    
   ],
   imports: [
     CommonModule,
@@ -41,6 +44,7 @@ import { EditUiData } from './edit-ui-data';
   exports: [
     LandingPg,
     LandingPgForm,
+    LandingScreen,
     AddUiData,
     // EditUiData
   ]
