@@ -21,12 +21,12 @@ import { RouterOutlet } from '@angular/router';
       position: sticky;
       top: 0;
       z-index: 1000;
-      align: center;
+      justify-content: center;
     }
     main {
-      background: transparent $blankIntroBkgd center center no-repeat;
-        -webkit-background-size: cover;
-        background-size: cover;
+      // background: transparent $blankIntroBkgd center center no-repeat;
+      //   -webkit-background-size: cover;
+      //   background-size: cover;
       padding: 2rem 4rem;
       display: flex;
       justify-content: center; 
