@@ -4,6 +4,7 @@ import { LandingPg } from './landing-pg';
 import { LandingScreen } from './landing-screen';
 import { AddUiData } from './add-ui-data';
 import { EditUiData } from './edit-ui-data';
+import { SrvcSelectScreen } from '../core-comps/srvc-select-screen';
 
 export const routes: Routes = [
     {
@@ -12,7 +13,7 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                component: LandingScreen,
+                component: SrvcSelectScreen,
                 outlet: 'mainRO'
             },
         ]

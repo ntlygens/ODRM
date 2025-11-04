@@ -21,6 +21,7 @@ import { RouterOutlet } from '@angular/router';
       position: sticky;
       top: 0;
       z-index: 1000;
+      opacity: 0.5;
       justify-content: center;
     }
     main {
@@ -34,6 +35,7 @@ import { RouterOutlet } from '@angular/router';
     }
   `],
 })
+
 export class App {
   protected readonly title = signal('ODRM Client');
 }

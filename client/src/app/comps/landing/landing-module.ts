@@ -17,11 +17,13 @@ import { LandingScreen } from './landing-screen';
 
 import { AddUiData } from './add-ui-data';
 import { EditUiData } from './edit-ui-data';
+import { SrvcSelectScreen } from '../core-comps/srvc-select-screen';
 
 
 @NgModule({
   declarations: [
     LandingPg,
+    SrvcSelectScreen,
     LandingPgForm,
     LandingScreen,
     AddUiData,
@@ -43,6 +45,7 @@ import { EditUiData } from './edit-ui-data';
   ],
   exports: [
     LandingPg,
+    SrvcSelectScreen,
     LandingPgForm,
     LandingScreen,
     AddUiData,

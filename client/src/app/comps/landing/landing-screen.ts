@@ -50,7 +50,9 @@ import { GuiDataService } from '../../core-func/gui-data-service';
 })
 export class LandingScreen implements OnInit {
   userInterface$ =  {} as WritableSignal<UserInterface[]>;
-  displayedColumns: string[] = ['name', 'img', 'desc', 'content', 'pgLoc'];
+  displayedColumns: string[] = ['name', 'img', 'desc', 'content', 'pgLoc'
+    
+  ];
 
   constructor(private uis: GuiDataService) {}
 
