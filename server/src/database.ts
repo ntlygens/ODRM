@@ -1,9 +1,11 @@
-
 import * as mongodb from "mongodb";
 import type { Employee } from "./employee.ts";
-
+import type { UserInterface } from "./interface.ts"
 export const collections: {
     employees?: mongodb.Collection<Employee>;
+} = {};
+export const uiDataCollections: {
+    userInterface?: mongodb.Collection<UserInterface>;
 } = {};
 
 export async function connectToDatabase(uri: string) {
@@ -16,12 +18,18 @@ export async function connectToDatabase(uri: string) {
     });
 
     const db: mongodb.Db = client.db("ODM");
-    await applySchemaValidation(db);
+    // await applySchemaValidation(db);
 
     const employeesCollection = db.collection<Employee>("employees");
-    collections.employees = employeesCollection;
+    const interfaceCollection = db.collection<UserInterface>("userInterface");
 
-    console.log(`Successfully connected to database: ${db.databaseName} and collection: employees`);
+    collections.employees = employeesCollection;
+    uiDataCollections.userInterface = interfaceCollection;
+
+    console.log(`Successfully connected to database:
+         ${db.databaseName} and collections:
+           ${interfaceCollection.collectionName}`
+        );
 }
 
 async function applySchemaValidation(db: mongodb.Db) {

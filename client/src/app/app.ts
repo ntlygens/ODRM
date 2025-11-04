@@ -15,7 +15,8 @@ import { RouterOutlet } from '@angular/router';
     </main>
   `,
   styles: [`
-    
+    $blankIntroBkgd: url("/assets/backgrounds/odm-interface.jpg ");
+
     mat-toolbar {
       position: sticky;
       top: 0;
@@ -23,7 +24,9 @@ import { RouterOutlet } from '@angular/router';
       align: center;
     }
     main {
-      background-image: url("/assets/backgrounds/odm-interface.jpg");
+      background: transparent $blankIntroBkgd center center no-repeat;
+        -webkit-background-size: cover;
+        background-size: cover;
       padding: 2rem 4rem;
       display: flex;
       justify-content: center; 

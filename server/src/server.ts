@@ -2,8 +2,8 @@ import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import { connectToDatabase } from "./database.ts";
-import { employeeRouter } from "./employee.routes.ts";
-
+// import { employeeRouter } from "./employee.routes.ts";
+import { uiRouter } from "./ui-interface.routes.ts";
 
 dotenv.config();
 
@@ -21,7 +21,8 @@ await connectToDatabase(MONGODB_URI)
         const app = express();
         app.use(cors());
 
-        app.use("/employees", employeeRouter);
+        app.use("/userInterface", uiRouter);
+        // app.use("/employees", employeeRouter);
 
         app.listen(5200, () => {
             console.log("Server is running on port 5200");
