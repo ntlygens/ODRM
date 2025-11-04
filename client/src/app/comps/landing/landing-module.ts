@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button'; 
 
 import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 
@@ -28,6 +29,8 @@ import { EditUiData } from './edit-ui-data';
     CommonModule,
     LandingRoutingModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatTableModule,
     MatButtonModule,

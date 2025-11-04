@@ -5,15 +5,15 @@ import { EmployeeList } from './comps/employee-list';
 import { AddEmpoloyee } from './comps/add-employee';
 import { EditEmployee } from './comps/edit-employee';
 import { Component } from '@angular/core';
-import { LandingPg } from './comps/landing-module/landing-pg';
-import { AddUiData } from './comps/landing-module/add-ui-data';
-import { EditUiData } from './comps/landing-module/edit-ui-data';
-import { ODMRouteInterface } from './comps/landing-module/landing-pg-model';
+import { LandingPg } from './comps/landing/landing-pg';
+import { AddUiData } from './comps/landing/add-ui-data';
+import { EditUiData } from './comps/landing/edit-ui-data';
+import { ODMRouteInterface } from './comps/landing/landing-pg-model';
 
 export const MAINROUTES: ODMRouteInterface[] = [
     {
         path: '',
-        loadChildren: () => import('./comps/landing-module/landing-module').then(
+        loadChildren: () => import('./comps/landing/landing-module').then(
             module => module.LandingModule
         ),
         data: {

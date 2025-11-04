@@ -1,9 +1,5 @@
 import { Component, effect, EventEmitter, Output, input } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
-// import { MatInputModule } from '@angular/material/input';
-// import { MatButtonModule } from '@angular/material/button';
-// import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserInterface } from './landing-pg-model';
 
 @Component({

@@ -10,7 +10,7 @@ import { GuiDataService } from '../../core-func/gui-data-service';
   template: `
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Add New UserInterface</mat-card-title>
+        <mat-card-title>Add New Interface Data</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <odm-landing-pg-form (formSubmitted)="addUiData($event)"></odm-landing-pg-form>
