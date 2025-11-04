@@ -1,23 +1,14 @@
 import { Component, effect, EventEmitter, Output, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+// import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatRadioModule } from '@angular/material/radio';
-import { UserInterface } from '../core-func/landing-pg-model';
+// import { MatInputModule } from '@angular/material/input';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatFormFieldModule } from '@angular/material/form-field';
+import { UserInterface } from './landing-pg-model';
 
 @Component({
   selector: 'odm-landing-pg-form',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-  MatButtonModule,
-    MatRadioModule,
-    CommonModule
-  ],
+  standalone: false,
   template: `
     <form class="uiData-form" [formGroup]="uiDataForm" (submit)="onSubmit()">
       <mat-form-field appearance="fill">

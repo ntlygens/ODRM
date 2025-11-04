@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserInterface } from './landing-pg-model';
+import { UserInterface } from '../comps/landing-module/landing-pg-model';
 
 @Injectable({
   providedIn: 'root',

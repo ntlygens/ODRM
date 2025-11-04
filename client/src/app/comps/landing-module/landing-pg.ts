@@ -1,21 +1,19 @@
 import { Component, OnInit, WritableSignal } from '@angular/core';
-import { GuiDataService } from '../core-func/gui-data-service';
-import { RouterModule } from '@angular/router';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button'; 
-import { MatCardModule } from '@angular/material/card';
-import { UserInterface } from '../core-func/landing-pg-model';
+import { GuiDataService } from '../../core-func/gui-data-service';
+import { UserInterface } from './landing-pg-model';
 
 @Component({
   selector: 'odm-landing-pg',
-  standalone: true,
-  imports: [RouterModule, MatTableModule, MatButtonModule, MatCardModule],
+  standalone: false,
   template: `
     <mat-card>
       <mat-card-header>
         <mat-card-title>Interface Logo</mat-card-title>
       </mat-card-header>
-      <mat-card-content>
+      <main>
+        <router-outlet name='mainRO' id='mainRO' />
+      </main>
+      <!-- <mat-card-content>
         <table mat-table [dataSource]="userInterface$()" class="mat-elevation-z8">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -53,7 +51,7 @@ import { UserInterface } from '../core-func/landing-pg-model';
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: ['name', 'img', 'desc', 'content', 'pgLoc', 'actions'];"></tr>
         </table>
-      </mat-card-content>
+      </mat-card-content> -->
       <mat-card-actions>
         <button mat-raised-button color="primary" routerLink="/add">Add New Data</button>
       </mat-card-actions>

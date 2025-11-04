@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'odm-edit-ui-data',
-  imports: [],
+  standalone: false,
   template: `
     <p>
       edit-ui-data works!

@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { UserInterface } from '../core-func/landing-pg-model';
-import { LandingPgForm } from './landing-pg-form';
-import { GuiDataService } from '../core-func/gui-data-service';
+import { Router, ActivatedRoute } from '@angular/router';
+// import { MatCardModule } from '@angular/material/card';
+import { UserInterface } from './landing-pg-model';
+import { GuiDataService } from '../../core-func/gui-data-service';
 
 @Component({
   selector: 'odm-add-ui-data',
-  standalone: true,
-  imports: [LandingPgForm, MatCardModule],
+  standalone: false,
   template: `
     <mat-card>
       <mat-card-header>
@@ -19,12 +17,13 @@ import { GuiDataService } from '../core-func/gui-data-service';
       </mat-card-content>
     </mat-card>
   `,
-  styles: ``,
+  styles: [``],
 })
 export class AddUiData {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private uis: GuiDataService,
   ) {}
 
@@ -32,7 +31,7 @@ export class AddUiData {
     this.uis.createUIData(uiData).
       subscribe({
         next: () => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/'], {relativeTo: this.route});
         },
         error: (err: any) => {
           alert('Failed to create uiData. Please try again.');
