@@ -2,18 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LandingRoutingModule } from './landing-routing-module';
 import { RouterModule } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button'; 
-
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatRadioModule } from '@angular/material/radio';
+import { NgMatModule } from '../../ng-mat/ng-mat.module';
 
 import { LandingPg } from './landing-pg';
 import { LandingPgForm } from './landing-pg-form';
-import { LandingScreen } from './landing-screen';
+import { LandingPgScreen } from './landing-pg-screen';
 
 import { AddUiData } from './add-ui-data';
 import { EditUiData } from './edit-ui-data';
@@ -25,7 +18,7 @@ import { SrvcSelectScreen } from '../core-comps/srvc-select-screen';
     LandingPg,
     SrvcSelectScreen,
     LandingPgForm,
-    LandingScreen,
+    LandingPgScreen,
     AddUiData,
     EditUiData,
     
@@ -34,20 +27,21 @@ import { SrvcSelectScreen } from '../core-comps/srvc-select-screen';
     CommonModule,
     LandingRoutingModule,
     RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatTableModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatRadioModule,
+    NgMatModule
+    // FormsModule,
+    // ReactiveFormsModule,
+    // MatCardModule,
+    // MatTableModule,
+    // MatButtonModule,
+    // MatInputModule,
+    // MatFormFieldModule,
+    // MatRadioModule,
   ],
   exports: [
     LandingPg,
     SrvcSelectScreen,
     LandingPgForm,
-    LandingScreen,
+    LandingPgScreen,
     AddUiData,
     // EditUiData
   ]

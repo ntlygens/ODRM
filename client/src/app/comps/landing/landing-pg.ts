@@ -6,22 +6,25 @@ import { UserInterface } from './landing-pg-model';
   selector: 'odm-landing-pg',
   standalone: false,
   template: `
+      <p> Landing PG </p>
       <main>
         <router-outlet name='mainRO' id='mainRO' />
       </main>
   `,
   styles: [`
-    table {
+    main {
+      // background: transparent $blankIntroBkgd center center no-repeat;
+      //   -webkit-background-size: cover;
+      //   background-size: cover;
       width: 100%;
-      button:first-of-type {
-        margin-right: 1rem;
-      }
+      height: auto;
+      display: flex;
+      justify-content: center; 
     }
   `],
 })
 export class LandingPg implements OnInit {
   userInterface$ =  {} as WritableSignal<UserInterface[]>;
-  displayedColumns: string[] = ['name', 'img', 'desc', 'content', 'pgLoc', 'actions'];
 
   constructor(public uis: GuiDataService) {}
 

@@ -1,12 +1,14 @@
 import { Component, OnInit, WritableSignal } from '@angular/core';
-import { UserInterface  } from './landing-pg-model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserInterface, ODMStateType  } from './landing-pg-model';
 import { GuiDataService } from '../../core-func/gui-data-service';
 
 @Component({
-  selector: 'odm-landing-screen',
+  selector: 'odm-landing-pg-screen',
   standalone: false,
   template: `
-      <mat-card-content>
+      <div> <p> Landing Screen </p> </div>
+      <!-- <mat-card-content>
         <table mat-table [dataSource]="userInterface$()" class="mat-elevation-z8">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -33,22 +35,22 @@ import { GuiDataService } from '../../core-func/gui-data-service';
             <td mat-cell *matCellDef="let userInterface"> {{userInterface.pgLoc}} </td>
           </ng-container>
 
-          <!-- <ng-container matColumnDef="actions">
+          <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> Action </th>
             <td mat-cell *matCellDef="let userInterface">
               <button mat-raised-button [routerLink]="['/edit', userInterface._id]">Edit</button>
               <button mat-raised-button color="warn" (click)="deleteSelectedData(userInterface._id)">Delete</button>
             </td>
-          </ng-container> -->
+          </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: ['name', 'img', 'desc', 'content', 'pgLoc'];"></tr>
         </table>
-      </mat-card-content>
+      </mat-card-content> -->
   `,
   styles: ``,
 })
-export class LandingScreen implements OnInit {
+export class LandingPgScreen implements OnInit {
   userInterface$ =  {} as WritableSignal<UserInterface[]>;
   displayedColumns: string[] = ['name', 'img', 'desc', 'content', 'pgLoc'
     
