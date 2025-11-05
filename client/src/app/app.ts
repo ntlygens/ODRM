@@ -1,29 +1,33 @@
 import { Component, signal } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
+// import { NgMatModule } from './ng-mat/ng-mat.module';
 import { RouterOutlet } from '@angular/router';
+import { CoreCompsModule } from './comps/core-comps/core-comps-module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule],
+  imports: [
+    RouterOutlet, 
+    // NgMatModule, 
+    CoreCompsModule
+  ],
   template: `
-    <mat-toolbar color="primary">
-      <h1>Welcome to {{ title() }}!</h1>
-    </mat-toolbar>
+    <odm-header-bar />
     <main>
       <router-outlet />
     </main>
+    <odm-footer-bar />
   `,
   styles: [`
-    $blankIntroBkgd: url("/assets/backgrounds/odm-interface.jpg ");
+    // $blankIntroBkgd: url("/assets/backgrounds/odm-interface.jpg ");
 
-    mat-toolbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      opacity: 0.5;
-      justify-content: center;
-    }
+    // mat-toolbar {
+    //   position: sticky;
+    //   top: 0;
+    //   z-index: 1000;
+    //   opacity: 0.5;
+    //   justify-content: center;
+    // }
     main {
       // background: transparent $blankIntroBkgd center center no-repeat;
       //   -webkit-background-size: cover;
@@ -37,5 +41,5 @@ import { RouterOutlet } from '@angular/router';
 })
 
 export class App {
-  protected readonly title = signal('ODRM Client');
+  // protected readonly title = signal('ODRM Client');
 }
