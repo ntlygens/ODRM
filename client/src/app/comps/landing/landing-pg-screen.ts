@@ -8,23 +8,40 @@ import { GuiDataService } from '../../core-func/gui-data-service';
   standalone: false,
   template: `
       <div> <p> Landing Screen </p> </div>
-      <mat-grid-list cols="3" rowHeight="3" gutterSize="2">
-        <mat-grid-tile>
+      <mat-grid-list cols="2" gutterSize="4">
           @for (tile of tiles; track tile._id; let idx = $index, e = $even) {
-            <li>
-              Item #{{ idx }} - {{ tile.name }} - {{ tile.num | currency:'USD' }}
-              @if ($last) {
-                (Last item!)
-              }
-            </li>
+            <mat-grid-tile>
+              <mat-card>
+                <mat-card-title>
+                  Item #{{ idx }} 
+                </mat-card-title>
+                <mat-card-content>
+                  {{ tile.name }} - {{ tile.num | currency:'USD' }}
+                </mat-card-content>
+                  
+                @if ($last) {
+                  (Last item!)
+                }
+              </mat-card>
+            </mat-grid-tile>
+
           } @empty {
-            <li>No products available.</li>
+            <mat-card><mat-card-content> products available.</mat-card-content></mat-card>
           }
           
-        </mat-grid-tile>
       </mat-grid-list>
   `,
-  styles: ``,
+  styles: [`
+    
+    .mdc-card {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+    }  
+
+  `],
 })
 export class LandingPgScreen implements OnInit {
   userInterface$ =  {} as WritableSignal<UserInterface[]>;

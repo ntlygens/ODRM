@@ -16,10 +16,6 @@ import { UserInterface, ServiceScreenInterface } from './landing-pg-model';
       // background: transparent $blankIntroBkgd center center no-repeat;
       //   -webkit-background-size: cover;
       //   background-size: cover;
-      width: 100%;
-      height: auto;
-      display: flex;
-      justify-content: center; 
     }
   `],
 })
