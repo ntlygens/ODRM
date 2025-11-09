@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LandingRoutingModule } from './landing-routing-module';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgMatModule } from '../../ng-mat/ng-mat.module';
 
 import { LandingPg } from './landing-pg';
@@ -27,6 +28,8 @@ import { SrvcSelectScreen } from '../core-comps/srvc-select-screen';
     CommonModule,
     LandingRoutingModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgMatModule
     // FormsModule,
     // ReactiveFormsModule,
