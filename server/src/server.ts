@@ -4,6 +4,7 @@ import cors from "cors";
 import { connectToDatabase } from "./database.ts";
 // import { employeeRouter } from "./employee.routes.ts";
 import { uiRouter } from "./ui-interface.routes.ts";
+import { ssiRouter } from "./ss-interface.routes.ts";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ await connectToDatabase(MONGODB_URI)
         app.use(cors());
 
         app.use("/userInterface", uiRouter);
+        app.use("/srvcscrnInterface", ssiRouter);
+        // app.use("/userInterface", uiRouter);
         // app.use("/employees", employeeRouter);
 
         app.listen(5200, () => {

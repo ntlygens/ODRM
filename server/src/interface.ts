@@ -9,3 +9,13 @@ export interface UserInterface {
     pgLoc: "Landing" | "Home" | "Work" | "Restaurant" | "RoadSide"
 
 }
+
+
+export interface ServiceScreenInterface {
+  _id?: mongodb.ObjectId;
+  name?: string;
+  desc?: string;
+  num?: number;
+
+}
+

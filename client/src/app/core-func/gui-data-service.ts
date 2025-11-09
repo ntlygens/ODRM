@@ -1,34 +1,57 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserInterface } from '../comps/landing/landing-pg-model';
+import { UserInterface, ServiceScreenInterface } from '../comps/landing/landing-pg-model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GuiDataService {
   private apiUrl = 'http://localhost:5200';
-  allData$ = signal<UserInterface[]>([]);
+  allUserData$ = signal<UserInterface[]>([]);
+  allSrvcScrnData$ = signal<ServiceScreenInterface[]>([]);
   uiData$ = signal<UserInterface>({} as UserInterface);
-
+  ssiData$ = signal<ServiceScreenInterface>({} as ServiceScreenInterface);
+  
   constructor(private http: HttpClient) {}
 
-  private refreshAllData() {
+  private refreshAllUserData() {
     this.http.get<UserInterface[]>(`${this.apiUrl}/userInterface`)
       .subscribe((data) => {
-        this.allData$.set(data);
+        this.allUserData$.set(data);
     });
   }
 
-  getAllData() {
-    this.refreshAllData();
-    return this.allData$;
+  private refreshAllSrvcScrnData() {
+    this.http.get<ServiceScreenInterface[]>(`${this.apiUrl}/srvcscrnInterface`)
+      .subscribe((data) => {
+        this.allSrvcScrnData$.set(data);
+    });
   }
 
-  getFieldIData(id: string) {
+  getAllUserData() {
+    this.refreshAllUserData();
+    return this.allUserData$;
+  }
+
+  getAllSrvcScrnData() {
+    this.refreshAllSrvcScrnData();
+    return this.allSrvcScrnData$;
+  }
+
+  getUserFieldUIData(id: string) {
     this.http.get<UserInterface>(`${this.apiUrl}/userInterface/${id}`)
-      .subscribe(UserInterface => {
-        this.uiData$.set(UserInterface);
+      .subscribe(data => {
+        this.uiData$.set(data);
         return this.uiData$();
+
+    });
+  }
+
+  getSrvcScrnFieldIData(id: string) {
+    this.http.get<ServiceScreenInterface>(`${this.apiUrl}/srvcscrnInterface/${id}`)
+      .subscribe(data => {
+        this.ssiData$.set(data);
+        return this.ssiData$();
 
     });
   }
@@ -41,6 +64,14 @@ export class GuiDataService {
     );
   }
 
+  createSSIData(newData: ServiceScreenInterface) {
+    return this.http.post<ServiceScreenInterface>(
+      `${this.apiUrl}/srvcscrnInterface`, 
+      newData,
+      {responseType: 'text' as 'json'}
+    );
+  }
+
   updateUIData(id: string, updatedData: UserInterface) {
     return this.http.put<UserInterface>(
       `${this.apiUrl}/userInterface/${id}`, 
@@ -48,9 +79,22 @@ export class GuiDataService {
       {responseType: 'text' as 'json' });
   }
 
+  updateSSIData(id: string, updatedData: ServiceScreenInterface) {
+    return this.http.put<ServiceScreenInterface>(
+      `${this.apiUrl}/srvcscrnInterface/${id}`, 
+      updatedData,
+      {responseType: 'text' as 'json' });
+  }
+
   deleteUIData(id: string) {
     return this.http.delete<void>(
       `${this.apiUrl}/userInterface/${id}`,
+      {responseType: 'text' as 'json' });
+  }
+
+  deleteSSIData(id: string) {
+    return this.http.delete<void>(
+      `${this.apiUrl}/srvcscrnInterface/${id}`,
       {responseType: 'text' as 'json' });
   }
 }

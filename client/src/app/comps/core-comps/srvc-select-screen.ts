@@ -81,13 +81,13 @@ export class SrvcSelectScreen implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllData();
+    // this.getAllUserData();
   }
 
-  private getAllData() {
-    this.userInterface$ = this.uis.allData$;
-    this.uis.getAllData();
-  } 
+  // private getAllUserData() {
+  //   this.userInterface$ = this.uis.allUserData$;
+  //   this.uis.getAllUserData();
+  // } 
 
   startUserXp() {
     // this.uis.setStartPg(false);

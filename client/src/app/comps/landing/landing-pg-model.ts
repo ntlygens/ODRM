@@ -17,6 +17,14 @@ export interface UserInterface {
 
 }
 
+export interface ServiceScreenInterface {
+  _id?: string;
+  name?: string;
+  desc?: string;
+  num?: number;
+
+}
+
 export interface ODMRouteInterface {
   title?: string;
   redirectTo?: string;

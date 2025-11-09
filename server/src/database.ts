@@ -1,11 +1,14 @@
 import * as mongodb from "mongodb";
 import type { Employee } from "./employee.ts";
-import type { UserInterface } from "./interface.ts"
+import type { UserInterface, ServiceScreenInterface } from "./interface.ts"
 export const collections: {
     employees?: mongodb.Collection<Employee>;
 } = {};
 export const uiDataCollections: {
     userInterface?: mongodb.Collection<UserInterface>;
+} = {};
+export const ssiDataCollections: {
+    srvcscrnInterface?: mongodb.Collection<ServiceScreenInterface>;
 } = {};
 
 export async function connectToDatabase(uri: string) {
@@ -21,14 +24,19 @@ export async function connectToDatabase(uri: string) {
     // await applySchemaValidation(db);
 
     const employeesCollection = db.collection<Employee>("employees");
-    const interfaceCollection = db.collection<UserInterface>("userInterface");
+    const userInterfaceCollction = db.collection<UserInterface>("userInterface");
+    const srvcScrnCollection = db.collection<ServiceScreenInterface>("srvcscrnInterface");
 
     collections.employees = employeesCollection;
-    uiDataCollections.userInterface = interfaceCollection;
+    uiDataCollections.userInterface = userInterfaceCollction;
+    ssiDataCollections.srvcscrnInterface = srvcScrnCollection;
 
     console.log(`Successfully connected to database:
          ${db.databaseName} and collections:
-           ${interfaceCollection.collectionName}`
+           ${userInterfaceCollction.collectionName}
+           and
+           ${srvcScrnCollection.collectionName}
+           `
         );
 }
 

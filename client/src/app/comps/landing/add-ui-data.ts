@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-// import { MatCardModule } from '@angular/material/card';
 import { UserInterface } from './landing-pg-model';
 import { GuiDataService } from '../../core-func/gui-data-service';
 
@@ -38,7 +37,7 @@ export class AddUiData {
           console.error('Error creating uiData:', err);
         }
       });
-      this.uis.getAllData();
+      this.uis.getAllUserData();
       console.log('UserInterface created:', uiData);
   }
 

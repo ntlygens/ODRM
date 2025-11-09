@@ -1,6 +1,6 @@
 import { Component, OnInit, WritableSignal } from '@angular/core';
 import { GuiDataService } from '../../core-func/gui-data-service';
-import { UserInterface } from './landing-pg-model';
+import { UserInterface, ServiceScreenInterface } from './landing-pg-model';
 
 @Component({
   selector: 'odm-landing-pg',
@@ -25,27 +25,34 @@ import { UserInterface } from './landing-pg-model';
 })
 export class LandingPg implements OnInit {
   userInterface$ =  {} as WritableSignal<UserInterface[]>;
+  srvcScrnInterface$ =  {} as WritableSignal<ServiceScreenInterface[]>;
 
   constructor(public uis: GuiDataService) {}
 
   ngOnInit() {
-    this.getAllData();  
+    this.getAllUserData();  
+    this.getAllSrvcSrcnData();
   }
 
   deleteSelectedData(id: string): void {
     this.uis.deleteUIData(id).
       subscribe({
         next: (response) => {
-          this.getAllData(); // Refresh the userInterface list after deletion
+          this.getAllUserData(); // Refresh the userInterface list after deletion
           console.log('Employee deleted successfully:', response);
         }
       });
 
   }
 
-  private getAllData() {
-    this.userInterface$ = this.uis.allData$;
-    this.uis.getAllData();
+  private getAllUserData() {
+    this.userInterface$ = this.uis.allUserData$;
+    // this.uis.getAllUserData();
+  } 
+  
+  private getAllSrvcSrcnData() {
+    this.srvcScrnInterface$ = this.uis.allSrvcScrnData$;
+    // this.uis.getAllSrvcScrnData();
   } 
 }
  
