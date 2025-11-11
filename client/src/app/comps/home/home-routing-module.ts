@@ -4,7 +4,7 @@ import { HomePg } from './home-pg';
 import { HomeInterface } from './home-pg-model';
 import { HomeLandingPg } from './home-landing-pg';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: HomePg,

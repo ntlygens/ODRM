@@ -13,16 +13,20 @@ export interface UserInterface {
     img: string;
     desc?: string;
     content?: string;
-    pgLoc: "Landing" | "Home" | "Work" | "Restaurant" | "RoadSide"
+    pgLoc: "Landing" | "Home" | "Work" | "Restaurant" | "CurbSide"
 
 }
 
 export interface ServiceScreenInterface {
   _id?: string;
   name?: string;
-  desc?: string;
-  num?: number;
+  title?: string;
+  subTitle?: string;
+  desc?: string;    
+  content?: Blob;
   img?: string;
+  rte?: string;
+  num?: number;
 
 }
 

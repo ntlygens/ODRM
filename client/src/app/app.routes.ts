@@ -13,8 +13,9 @@ import { ODMRouteInterface } from './comps/landing/landing-pg-model';
 export const MAINROUTES: ODMRouteInterface[] = [
     {
         path: '',
-        loadChildren: () => import('./comps/landing/landing-module').then(
-            module => module.LandingModule
+        loadChildren: () => import('./comps/landing/landing-module')
+            .then(
+                module => module.LandingModule
         ),
         data: {
             state: 'appIntro',

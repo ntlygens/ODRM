@@ -6,7 +6,7 @@ export interface UserInterface {
     img: string;
     desc?: string;
     content?: string;
-    pgLoc: "Landing" | "Home" | "Work" | "Restaurant" | "RoadSide"
+    pgLoc: "Landing" | "Home" | "Work" | "Restaurant" | "CurbSide"
 
 }
 
@@ -14,7 +14,12 @@ export interface UserInterface {
 export interface ServiceScreenInterface {
   _id?: mongodb.ObjectId;
   name?: string;
-  desc?: string;
+  title?: string;
+  subTitle?: string;
+  desc?: string;    
+  content?: Blob;
+  img?: string;
+  rte?: string;
   num?: number;
 
 }

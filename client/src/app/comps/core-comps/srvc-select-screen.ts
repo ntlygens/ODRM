@@ -9,12 +9,12 @@ import { GuiDataService } from '../../core-func/gui-data-service';
   standalone: false,
   template: `
     <div> <p> Slctr Screen </p> </div>
-              <mat-card (click)="navigateToDetails()">
+              <mat-card (click)='navigateToDetails(["{{this.tileData?.rte}}"])'>
                 <mat-card-title>
-                  Item #{{ tileData$?._id}} 
+                  Item #{{ tileData?._id}} 
                 </mat-card-title>
                 <mat-card-content>
-                  {{ tileData$?.name }} - {{ tileData$?.num | currency:'USD' }}
+                  {{ tileData?.name }} - {{ tileData?.num | currency:'USD' }}
                 </mat-card-content>
                   
                 <!-- @if ($last) {
@@ -70,8 +70,6 @@ import { GuiDataService } from '../../core-func/gui-data-service';
     </div>      -->
   `,
   styles: [`
-      
-
       .mdc-card {
         display: flex;
         justify-content: space-between;
@@ -106,7 +104,7 @@ export class SrvcSelectScreen implements OnInit {
     private sanitizer: DomSanitizer,
   ) {
     // const tileData$?: ServiceScreenInterface;
-    // const tileData$: ServiceScreenInterface = this.tileData;
+    // this.tileData$ = this.tileData;
 
     const homeUI = ODMStateType.HOME;
     // console.log(`home: ${homeUI}`);
@@ -123,8 +121,8 @@ export class SrvcSelectScreen implements OnInit {
 
   ngOnInit(): void {
     // this.getAllUserData();
-    this.tileData$ = this.tileData;
-    console.log('scrn data: ', this.tileData$?.img);
+    // this.tileData$ = this.tileData;
+    console.log('scrn data: ', this.tileData?.img);
   }
 
   // private getAllUserData() {
@@ -143,11 +141,11 @@ export class SrvcSelectScreen implements OnInit {
     // window.open(`${this.rmtURL}`, '_self');
    }
 
-  navigateToDetails() {
+  navigateToDetails(data?: any) {
   // navigateToDetails(itemId: number) {
     // Perform any necessary logic here before navigating
-    console.log('Navigating to details for item:');
-    this.router.navigate(['/h']);
+    console.log(`Navigating to details for item: ${data}`);
+    this.router.navigate([`${data}`]);
   }
 
 }

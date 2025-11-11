@@ -20,51 +20,19 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
             <mat-card><mat-card-content>no products available.</mat-card-content></mat-card>
           }
 
-        <!-- <mat-grid-tile @for(tile of tiles$; idx = $index; track trackById)>
-          <mat-card [style.background-image]="dynamicBackground">
-            <mat-card-title>
-              Item #{{ tile.idx }} 
-            </mat-card-title>
-            <mat-card-content>
-              {{ tile.name }} - {{ tile.num | currency:'USD' }}
-            </mat-card-content>
-            <ng-container *ngIf="last">
-              {{ tile.name }} - {{ tile.num | currency:'USD' }}
-            </ng-container>
-          </mat-card>
-        </mat-grid-tile>
-
-        <ng-container *ngIf="!tiles$ || tiles$.length === 0">
+        <!-- <ng-container *ngIf="!tiles$ || tiles$.length === 0">
           <mat-card><mat-card-content> products available.</mat-card-content></mat-card>
         </ng-container> -->
       </mat-grid-list>
   `,
-  styles: [`
-    // .mdc-card {
-    //   display: flex;
-    //   justify-content: space-between;
-    //   text-align: center;
-    //   width: 100%;
-    //   height: 100%;
-    //   background-size: cover;
-    //   background-repeat: no-repeat;
-
-    // }  
-
-  `],
+  styles: [``],
 })
 export class LandingPgScreen implements OnInit {
   userInterface$ =  {} as WritableSignal<UserInterface[]>;
   srvcScrnInterface$ = {} as WritableSignal<ServiceScreenInterface[]>;
   
-  // tile$: ServiceScreenInterface;
   tiles$: ServiceScreenInterface[] = [];
   tileBackgrounds$: ServiceScreenInterface[] = [];
-
-  // imageUrl: string = '';
-  // imageUrls: string[] = [];
-  // dynamicBackground: SafeStyle = 'any';
-  // dynamicBackgrounds: SafeStyle[] = [];
 
   constructor(
     private uis: GuiDataService,
