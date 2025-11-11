@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WorkPg } from './work-pg';
-import { WorkLandingPg } from './work-landing-pg';
+import { RstrntPg } from './rstrnt-pg';
+import { RstrntLandingPg } from './rstrnt-landing-pg';
+
 
 export const routes: Routes = [
   {
     path: '',
-    component: WorkPg,
+    component: RstrntPg,
     children: [
-        {
-            path: '',
-            component: WorkLandingPg,
-            outlet: 'mainRO'
-        },
+      {
+        path: '',
+        component: RstrntLandingPg,
+        outlet: 'mainRO'
+      }
     ]
   }
 ];
@@ -21,4 +22,4 @@ export const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class WorkRoutingModule { }
+export class RstrntRoutingModule { }
