@@ -11,7 +11,8 @@
           "inlineStyle": true,
           "style": "scss",
           "skipTests": true,
-          "flat": true
+          "flat": true,
+          "standalone": false
         },
         "@schematics/angular:class": {
           "skipTests": true
