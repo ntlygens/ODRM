@@ -22,6 +22,7 @@ export interface ServiceScreenInterface {
   name?: string;
   desc?: string;
   num?: number;
+  img?: string;
 
 }
 

@@ -1,6 +1,7 @@
-import { Component, OnInit, WritableSignal } from '@angular/core';
+import { Component, Input, OnInit, WritableSignal } from '@angular/core';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserInterface, ODMStateType } from '../landing/landing-pg-model';
+import { UserInterface, ODMStateType, ServiceScreenInterface } from '../landing/landing-pg-model';
 import { GuiDataService } from '../../core-func/gui-data-service';
 
 @Component({
@@ -8,6 +9,18 @@ import { GuiDataService } from '../../core-func/gui-data-service';
   standalone: false,
   template: `
     <div> <p> Slctr Screen </p> </div>
+              <mat-card (click)="navigateToDetails()">
+                <mat-card-title>
+                  Item #{{ tileData$?._id}} 
+                </mat-card-title>
+                <mat-card-content>
+                  {{ tileData$?.name }} - {{ tileData$?.num | currency:'USD' }}
+                </mat-card-content>
+                  
+                <!-- @if ($last) {
+                  {{ tile.name }} - {{ tile.num | currency:'USD' }}
+                } -->
+              </mat-card>
       <!-- mat-card-content>
         <table mat-table [dataSource]="userInterface$()" class="mat-elevation-z8">
           <ng-container matColumnDef="name">
@@ -48,10 +61,6 @@ import { GuiDataService } from '../../core-func/gui-data-service';
         </table>
       </mat-card-content> -->
 
-
-
-
-
     <!-- <div id='srvcSlctrCntnr' class="">
       <div id='CTA_div'>
         <button color='warn' (click)='startUserXp(); $event.preventDefault()' routerLinkActive='true' mat-flat-button type='button'>Get Started</button>
@@ -61,27 +70,61 @@ import { GuiDataService } from '../../core-func/gui-data-service';
     </div>      -->
   `,
   styles: [`
-      #srvcSlctrCntnr {
+      
+
+      .mdc-card {
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
         width: 100%;
         height: 100%;
-      }
+        background-size: cover;
+        background-repeat: no-repeat;
+
+      }  
+
     `],
 })
 
 export class SrvcSelectScreen implements OnInit {
+  @Input() tileData?: ServiceScreenInterface;
+
+  
+  tileData$?: ServiceScreenInterface;
   userInterface$ =  {} as WritableSignal<UserInterface[]>;
+  srvcScrnInterface$ = {} as WritableSignal<ServiceScreenInterface[]>;
+
+  imageUrl: string = '';
+  imageUrls: string[] = [];
+  // dynamicBackground: SafeStyle;
+  dynamicBackgrounds: SafeStyle[] = [];
 
   constructor(
     private uis: GuiDataService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
   ) {
+    // const tileData$?: ServiceScreenInterface;
+    // const tileData$: ServiceScreenInterface = this.tileData;
+
     const homeUI = ODMStateType.HOME;
-    console.log(`home: ${homeUI}`)
+    // console.log(`home: ${homeUI}`);
+
+    // for (const obj of this.tileData$) {
+    // this.dynamicBackground = this.sanitizer.bypassSecurityTrustStyle(`url(${this.tileData['img']})`);
+    //     console.log('dynamic back: ', this.dynamicBackground);
+    //   }
+      // this.tiles$ = this.srvcScrnInterface$();
+      // console.log('scrn data: ', this.tileData$.img);
+      // this.dynamicBackground = this.sanitizer.bypassSecurityTrustStyle(`url(${this.imageUrl})`);
+
   }
 
   ngOnInit(): void {
     // this.getAllUserData();
+    this.tileData$ = this.tileData;
+    console.log('scrn data: ', this.tileData$?.img);
   }
 
   // private getAllUserData() {
@@ -99,5 +142,12 @@ export class SrvcSelectScreen implements OnInit {
     // this.gs.setStartPg(false);
     // window.open(`${this.rmtURL}`, '_self');
    }
+
+  navigateToDetails() {
+  // navigateToDetails(itemId: number) {
+    // Perform any necessary logic here before navigating
+    console.log('Navigating to details for item:');
+    this.router.navigate(['/h']);
+  }
 
 }

@@ -22,16 +22,19 @@ export const MAINROUTES: ODMRouteInterface[] = [
         },
         outlets: [ 'mainAppRO' ]
     },
-    // {
-    //     path: 'u',
-    //     component: ListComponent,
-    //     data: {
-    //         state: 'UserMode',
-    //         animation: 'isRight'
-    //     },
-    //     outlets: [ 'mainAppRO' ]
+    {
+        path: 'h',
+        loadChildren: () => import('./comps/home/home-module')
+            .then(
+                module => module.HomeModule
+            ),
+        data: {
+            state: 'UserMode',
+            animation: 'isRight'
+        },
+        outlets: [ 'mainAppRO' ]
 
-    // },
+    },
     // {
     //     path: 'c',
     //     component: MenuComponent,
