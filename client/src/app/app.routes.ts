@@ -36,15 +36,30 @@ export const MAINROUTES: ODMRouteInterface[] = [
         outlets: [ 'mainAppRO' ]
 
     },
-    // {
-    //     path: 'c',
-    //     component: MenuComponent,
-    //     data: {
-    //         state: 'ClientMode',
-    //         animation: 'isLeft'
-    //     },
-    //     outlets: [ 'mainAppRO' ]
-    // },
+    {
+        path: 'r',
+        loadChildren: () => import('./comps/restaurant/rstrnt-module')
+            .then(
+                module => module.RstrntModule
+            ),
+        data: {
+            state: 'ClientMode',
+            animation: 'isLeft'
+        },
+        outlets: [ 'mainAppRO' ]
+    },
+    {
+        path: 'c',
+        loadChildren: () => import('./comps/curbside/curbside-module')
+            .then(
+                module => module.CurbsideModule
+            ),
+        data: {
+            state: 'ClientMode',
+            animation: 'isLeft'
+        },
+        outlets: [ 'mainAppRO' ]
+    },
     // {
     //     path: 'p',
     //     component: FoodPaymentComponent,
