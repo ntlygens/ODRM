@@ -9,7 +9,7 @@ import { GuiDataService } from '../../core-func/gui-data-service';
   standalone: false,
   template: `
     <div> <p> Slctr Screen </p> </div>
-              <mat-card (click)='navigateToDetails(["{{this.tileData?.rte}}"])'>
+              <mat-card (click)='navigateToDetails([this.tileData?.rte])'>
                 <mat-card-title>
                   Item #{{ tileData?._id}} 
                 </mat-card-title>

@@ -60,27 +60,7 @@ export const MAINROUTES: ODMRouteInterface[] = [
         },
         outlets: [ 'mainAppRO' ]
     },
-    // {
-    //     path: 'p',
-    //     component: FoodPaymentComponent,
-    //     data: {
-    //         state: 'PaymentMode',
-    //         animation: 'isLeft'
-    //     },
-    //     outlets: [ 'mainAppRO' ]
-    // },
-    // {
-    //     path: 'm',
-    //     loadChildren: () => import('./merchant/merchant.module').then(
-    //         module => module.MerchantModule
-    //     ),
-    //     data: {
-    //         state: 'MerchantMode',
-    //         animation: 'isLeft',
-    //         mobile: GuiService.prototype.isMobileDevice()
-    //     },
-    //     outlets: [ 'mainAppRO' ]
-    // },
+   
     // {
     //     path: 'campaign',
     //     loadChildren: () => import('./campaign/campaign.module').then(
