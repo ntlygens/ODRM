@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgMatModule } from '../../ng-mat/ng-mat.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoreCompsModule } from '../core-comps/core-comps-module';
 
 import { HomeRoutingModule } from './home-routing-module';
 import { HomePg } from './home-pg';
@@ -19,7 +20,8 @@ import { HomeLandingPg } from './home-landing-pg';
     NgMatModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreCompsModule
   ],
   exports: [
     HomePg,

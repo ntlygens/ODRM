@@ -30,7 +30,20 @@ export const MAINROUTES: ODMRouteInterface[] = [
                 module => module.HomeModule
             ),
         data: {
-            state: 'UserMode',
+            state: 'HomeMode',
+            animation: 'isRight'
+        },
+        outlets: [ 'mainAppRO' ]
+
+    },
+    {
+        path: 'w',
+        loadChildren: () => import('./comps/work/work-module')
+            .then(
+                module => module.WorkModule
+            ),
+        data: {
+            state: 'WorkMode',
             animation: 'isRight'
         },
         outlets: [ 'mainAppRO' ]
@@ -43,7 +56,7 @@ export const MAINROUTES: ODMRouteInterface[] = [
                 module => module.RstrntModule
             ),
         data: {
-            state: 'ClientMode',
+            state: 'RstrntMode',
             animation: 'isLeft'
         },
         outlets: [ 'mainAppRO' ]
@@ -55,7 +68,7 @@ export const MAINROUTES: ODMRouteInterface[] = [
                 module => module.CurbsideModule
             ),
         data: {
-            state: 'ClientMode',
+            state: 'CrbSdeMode',
             animation: 'isLeft'
         },
         outlets: [ 'mainAppRO' ]

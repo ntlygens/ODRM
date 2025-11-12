@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, WritableSignal } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserInterface, ODMStateType, ServiceScreenInterface } from '../landing/landing-pg-model';
+import { UserInterface, ODMStateType, ServiceScreenInterface } from './landing-pg-model';
 import { GuiDataService } from '../../core-func/gui-data-service';
 
 @Component({
@@ -10,9 +10,8 @@ import { GuiDataService } from '../../core-func/gui-data-service';
   template: `
     <div> <p> Slctr Screen </p> </div>
               <mat-card (click)='navigateToDetails([this.tileData?.rte])'>
-                <mat-card-title>
-                  Item #{{ tileData?._id}} 
-                </mat-card-title>
+                
+                <img mat-card-image src="{{tileData?.img}}">
                 <mat-card-content>
                   {{ tileData?.name }} - {{ tileData?.num | currency:'USD' }}
                 </mat-card-content>

@@ -4,7 +4,7 @@ import { LandingPg } from './landing-pg';
 import { LandingPgScreen } from './landing-pg-screen';
 import { AddUiData } from './add-ui-data';
 import { EditUiData } from './edit-ui-data';
-import { SrvcSelectScreen } from '../core-comps/srvc-select-screen';
+import { SrvcSelectScreen } from './srvc-select-screen';
 
 export const routes: Routes = [
     {
