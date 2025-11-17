@@ -8,6 +8,7 @@ import { CoreCompsModule } from '../core-comps/core-comps-module';
 import { HomeRoutingModule } from './home-routing-module';
 import { HomePg } from './home-pg';
 import { HomeLandingPg } from './home-landing-pg';
+import { JumboTronComponent, JumbotronDemoComponent } from "../core-comps/jumbo-tron";
 
 @NgModule({
   declarations: [
@@ -21,8 +22,10 @@ import { HomeLandingPg } from './home-landing-pg';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    CoreCompsModule
-  ],
+    CoreCompsModule,
+    JumboTronComponent,
+    JumbotronDemoComponent
+],
   exports: [
     HomePg,
     HomeLandingPg,

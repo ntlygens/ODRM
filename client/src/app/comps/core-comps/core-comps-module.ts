@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgMatModule } from '../../ng-mat/ng-mat.module';
 import { HeaderBar } from './header-bar';
 import { FooterBar } from './footer-bar';
 import { DataCarousel } from './data-carousel';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { UncontainedDataCarousel } from './uncontained-data-carousel';
 import { CarouselItem } from './carousel-item';
 
@@ -16,7 +16,8 @@ import { CarouselItem } from './carousel-item';
     FooterBar,
     DataCarousel,
     UncontainedDataCarousel,
-    CarouselItem
+    CarouselItem,
+    
   ],
   imports: [
     CommonModule,
@@ -29,7 +30,8 @@ import { CarouselItem } from './carousel-item';
     FooterBar,
     DataCarousel,
     UncontainedDataCarousel,
-    CarouselItem
+    CarouselItem,
+    
   ]
 })
 export class CoreCompsModule { }

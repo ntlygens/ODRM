@@ -4,28 +4,35 @@ import { Component } from '@angular/core';
   selector: 'odm-home-landing-pg',
   standalone: false,
   template: `
-    <p>
+    <!-- <p>
       home-landing-pg works!
-    </p>
-    
-    <div class="demo-container">
+    </p> -->
+    <div class="home-carousel-container">
       <h2>Multi-Browse Carousel Demo</h2>
       
       <odm-uncontained-data-carousel 
-        [showNavigation]="true"
+        [showNavigation]="false"
         [showIndicators]="true"
         [autoScroll]="false">
-        <odm-carousel-item *ngFor="let item of carouselItems" class="carousel-card">
-          <div class="card-content">
-            <div class="card-image" [style.background]="item.color">
-              <span class="card-number">{{ item.id }}</span>
-            </div>
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.description }}</p>
-            <button mat-button color="primary">Learn More</button>
-          </div>
-        </odm-carousel-item>
+        @for(item of carouselItems; track $index; let idx = $index; let e = $even){
+            <odm-carousel-item class="carousel-card">
+              <div class="card-content">
+                  <div class="card-image" [style.background]="item.color">
+                    <span class="card-number">{{ item.id }}</span>
+                  </div>
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.description }}</p>
+                  <button mat-button color="primary">Learn More</button>
+                </div>
+            </odm-carousel-item>    
+        }
       </odm-uncontained-data-carousel>
+
+      <app-jumbotron></app-jumbotron>
+      <!-- <app-jumbotron-demo></app-jumbotron-demo> -->
+      
+    
+        
     </div>
     
     <!-- <odm-data-carousel
@@ -37,15 +44,8 @@ import { Component } from '@angular/core';
         [showIndicators]="true">
     </odm-data-carousel> -->
   `,
-  styles: [`
-    // :host {
-    //   display: block;
-    //   flex: 0 0 auto;
-    //   scroll-snap-align: start;
-    // }
-    
-    
-    .demo-container {
+  styles: [`    
+    .home-carousel-container {
       padding: 24px;
       max-width: 1200px;
       margin: 0 auto;
@@ -65,12 +65,13 @@ import { Component } from '@angular/core';
       background: white;
       border-radius: 12px;
       overflow: hidden;
+      height: inherit;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .card-content:hover {
-      transform: translateY(-4px);
+      transform: scale(1.05) translateY(-4px);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     }
 
@@ -106,7 +107,7 @@ import { Component } from '@angular/core';
   `],
 })
 export class HomeLandingPg {
-  carouselItems = [
+  carouselItems: CarouselItem[] = [
     { id: 1, title: 'Item One', description: 'Description for first item', color: '#6366f1' },
     { id: 2, title: 'Item Two', description: 'Description for second item', color: '#8b5cf6' },
     { id: 3, title: 'Item Three', description: 'Description for third item', color: '#ec4899' },
@@ -141,7 +142,9 @@ export class HomeLandingPg {
  }
 
  export interface CarouselItem {
-  image: string;
+  id: number;
+  image?: string;
   title?: string;
+  color?: string;
   description?: string;
 }

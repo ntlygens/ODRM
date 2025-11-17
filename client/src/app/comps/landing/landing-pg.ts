@@ -6,7 +6,7 @@ import { UserInterface, ServiceScreenInterface } from './landing-pg-model';
   selector: 'odm-landing-pg',
   standalone: false,
   template: `
-      <p> Landing PG </p>
+      <!-- <p> Landing PG </p> -->
       <main>
         <router-outlet name='mainRO' id='mainRO' />
       </main>

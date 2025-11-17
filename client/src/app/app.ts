@@ -34,7 +34,7 @@ import { CoreCompsModule } from './comps/core-comps/core-comps-module';
       //   background-size: cover;
       padding: 10px 20px;
       justify-content: center; 
-      margin-top: 0;
+      margin: 0 0 3rem;
     }
   `],
 })

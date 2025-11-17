@@ -14,7 +14,7 @@ import { Component, signal } from '@angular/core';
       position: sticky;
       top: 0;
       z-index: 1000;
-      opacity: 0.75;
+      opacity: 0.95;
       justify-content: center;
     }  
 

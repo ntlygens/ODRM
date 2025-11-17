@@ -9,7 +9,16 @@ import { Component } from '@angular/core';
       display: block;
       flex: 0 0 auto;
       scroll-snap-align: start;
+      height: 100%;
+    
     }
+    :host .card-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
   `]
 })
 export class CarouselItem {

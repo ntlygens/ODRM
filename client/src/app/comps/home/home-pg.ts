@@ -6,9 +6,9 @@ import { HomeInterface } from './home-pg-model';
   selector: 'odm-home-pg',
   standalone: false,
   template: `
-    <p>
+    <!-- <p>
       home-pg works!
-    </p>
+    </p> -->
     <main>
       <router-outlet name="mainRO" id="mainRO"></router-outlet>
     </main>

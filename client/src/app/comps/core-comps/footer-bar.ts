@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
       position: sticky;
       bottom: 0;
       z-index: 1000;
-      opacity: 0.75;
+      opacity: 0.95;
       justify-content: center;
     } 
 

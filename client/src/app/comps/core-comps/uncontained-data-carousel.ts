@@ -1,6 +1,9 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy, ContentChildren, QueryList, TemplateRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy, ContentChildren, QueryList, PLATFORM_ID, Inject, TemplateRef } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CarouselItem } from './carousel-item';
 import { CdkScrollable } from '@angular/cdk/scrolling';
+import { platformBrowser } from '@angular/platform-browser';
+import ResizeObserver from 'resize-observer-polyfill';
 
 @Component({
   selector: 'odm-uncontained-data-carousel',
@@ -50,9 +53,11 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
     :host {
       display: block;
       width: 100%;
+      height: 500px;
     }
 
     .carousel-container {
+      height: inherit;
       position: relative;
       display: flex;
       align-items: center;
@@ -60,7 +65,9 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
     }
 
     .carousel-scroll-container {
+      height: inherit;
       flex: 1;
+      padding: 1rem;
       overflow-x: auto;
       overflow-y: hidden;
       scroll-behavior: smooth;
@@ -68,6 +75,18 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       -ms-overflow-style: none;
+
+      .carousel-content {
+          height: inherit;
+        .carousel-card {
+          height: inherit;
+
+          .card-content {
+            height: inherit;
+          }
+        }
+      }
+      
     }
 
     .carousel-scroll-container::-webkit-scrollbar {
@@ -78,6 +97,7 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
       display: flex;
       gap: 16px;
       padding: 8px 0;
+      height: 100%;
     }
 
     .carousel-nav {
@@ -95,7 +115,7 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
       display: flex;
       justify-content: center;
       gap: 8px;
-      margin-top: 16px;
+      margin-top: 2rem;
     }
 
     .indicator {
@@ -135,9 +155,21 @@ export class UncontainedDataCarousel implements AfterViewInit, OnDestroy {
   canScrollNext = false;
   currentPage = 0;
   pages: number[] = [];
+  
 
   private autoScrollTimer?: number;
   private resizeObserver?: ResizeObserver;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  if (isPlatformBrowser(this.platformId)) {
+    // Dynamically import the polyfill if needed, ensuring it runs only in the browser context
+    import('resize-observer-polyfill').then(module => {
+        if (!window.ResizeObserver) {
+            window.ResizeObserver = module.default;
+        }
+    });
+  }
+}
 
   ngAfterViewInit() {
     setTimeout(() => {
