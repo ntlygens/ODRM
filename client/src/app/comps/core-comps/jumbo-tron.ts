@@ -52,8 +52,8 @@ export class JumbotronActionsComponent {}
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    JumbotronContentComponent,
-    JumbotronActionsComponent
+    // JumbotronContentComponent,
+    // JumbotronActionsComponent
   ],
   template: `
     <div 
