@@ -14,6 +14,8 @@ import { Component } from '@angular/core';
         [showNavigation]="false"
         [showIndicators]="true"
         [autoScroll]="false">
+        //********** */
+        //TODO: Input directive for stte change here
         @for(item of carouselItems; track $index; let idx = $index; let e = $even){
             <odm-carousel-item class="carousel-card">
               <div class="card-content">

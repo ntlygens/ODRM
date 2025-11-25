@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
     <p>
       curbside-landing-pg works!
     </p>
+    <app-jumbotron></app-jumbotron>
   `,
   styles: ``,
 })

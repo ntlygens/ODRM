@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgMatModule } from '../../ng-mat/ng-mat.module'; 
 
 import { CurbsideRoutingModule } from './curbside-routing-module';
 import { CurbsidePg } from './curbside-pg';
 import { CurbsideLandingPg } from './curbside-landing-pg';
 
+import { JumboTronComponent } from '../core-comps/jumbo-tron';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import { CurbsideLandingPg } from './curbside-landing-pg';
   ],
   imports: [
     CommonModule,
-    CurbsideRoutingModule
+    CurbsideRoutingModule,
+    JumboTronComponent,
+    NgMatModule,
   ],
   exports: [
     CurbsidePg,
