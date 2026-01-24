@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
     <p>
       rstrnt-landing-pg works!
     </p>
-    <app-jumbotron></app-jumbotron>
+    <odm-jumbotron></odm-jumbotron>
   `,
   styles: ``,
 })

@@ -7,7 +7,9 @@ import { FooterBar } from './footer-bar';
 import { DataCarousel } from './data-carousel';
 import { UncontainedDataCarousel } from './uncontained-data-carousel';
 import { CarouselItem } from './carousel-item';
-
+import { DynamicContentGridComponent } from './dynamic-content-grid';
+import { DynamicCardComponent } from './dynamic-card-component';
+import { DynamicGridComponent } from './dynamic-grid-component';
 
 
 @NgModule({
@@ -17,12 +19,16 @@ import { CarouselItem } from './carousel-item';
     DataCarousel,
     UncontainedDataCarousel,
     CarouselItem,
+    DynamicContentGridComponent,
+    DynamicCardComponent,
+    DynamicGridComponent
     
   ],
   imports: [
     CommonModule,
     NgMatModule,
     DragDropModule,
+
 
   ],
   exports: [
@@ -31,6 +37,9 @@ import { CarouselItem } from './carousel-item';
     DataCarousel,
     UncontainedDataCarousel,
     CarouselItem,
+    DynamicCardComponent,
+    DynamicGridComponent,
+    DynamicContentGridComponent
     
   ]
 })

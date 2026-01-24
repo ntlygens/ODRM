@@ -11,48 +11,56 @@ import { UserInterface } from './landing-pg-model';
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" required />
         @if(name?.invalid) {
-          <mat-error *ngIf="name?.errors?.['required']">Name is required</mat-error>
+          @if (name?.errors?.['required']) {
+            <mat-error>Name is required</mat-error>
+          }
         }
       </mat-form-field>
-
+    
       <mat-form-field appearance="fill">
         <mat-label>Img</mat-label>
         <input matInput formControlName="img" required />
         @if(img?.invalid) {
-          <mat-error *ngIf="name?.errors?.['required']">IMG is required</mat-error>
+          @if (name?.errors?.['required']) {
+            <mat-error>IMG is required</mat-error>
+          }
         }
       </mat-form-field>
-
+    
       <mat-form-field appearance="fill">
         <mat-label>Desc</mat-label>
         <input matInput formControlName="desc" required />
         @if(desc?.invalid) {
-          <mat-error *ngIf="desc?.errors?.['required']">Desc is required</mat-error>
+          @if (desc?.errors?.['required']) {
+            <mat-error>Desc is required</mat-error>
+          }
         }
       </mat-form-field>
-
+    
       <mat-form-field appearance="fill">
         <mat-label>Content</mat-label>
         <input matInput formControlName="content" required />
         @if(content?.invalid) {
-          <mat-error *ngIf="content?.errors?.['required']">Content is required</mat-error>
+          @if (content?.errors?.['required']) {
+            <mat-error>Content is required</mat-error>
+          }
         }
       </mat-form-field>
-
+    
       <mat-radio-group formControlName="pgLoc" aria-label="Select UserInterface Level">
         <mat-radio-button value="Landing" required>Landing</mat-radio-button>
-        <mat-radio-button value="Home">Home</mat-radio-button> 
-        <mat-radio-button value="Work">Work</mat-radio-button> 
-        <mat-radio-button value="Restaurant">Restaurant</mat-radio-button> 
+        <mat-radio-button value="Home">Home</mat-radio-button>
+        <mat-radio-button value="Work">Work</mat-radio-button>
+        <mat-radio-button value="Restaurant">Restaurant</mat-radio-button>
         <mat-radio-button value="Roadside">Roadside</mat-radio-button>
       </mat-radio-group>
-        
-      
+    
+    
       <button mat-raised-button color="primary" type="submit" [disabled]="uiDataForm.invalid">
         Add
       </button>
     </form>
-  `,
+    `,
   styles: `
     .uiData-form {
       display: flex;

@@ -1,5 +1,5 @@
 import { Component, effect, EventEmitter, Output, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,39 +15,42 @@ import { Employee } from '../core-func/employee-model';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatRadioModule,
-    CommonModule
-  ],
+    MatRadioModule
+],
   template: `
     <form class="employee-form" [formGroup]="employeeForm" (submit)="onSubmit()">
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" required />
         @if(name?.invalid) {
-          <mat-error *ngIf="name?.errors?.['required']">Position is required</mat-error>
+          @if (name?.errors?.['required']) {
+            <mat-error>Position is required</mat-error>
+          }
         }
       </mat-form-field>
-      
+    
       <mat-form-field appearance="fill">
         <mat-label>Position</mat-label>
         <input matInput formControlName="position" required />
         @if (position?.invalid) {
-          <mat-error *ngIf="position?.errors?.['required']">Position is required</mat-error>
+          @if (position?.errors?.['required']) {
+            <mat-error>Position is required</mat-error>
+          }
         }
       </mat-form-field>
-      
+    
       <mat-radio-group formControlName="level" aria-label="Select Employee Level">
         <mat-radio-button value="junior" required>Junior</mat-radio-button>
-        <mat-radio-button value="mid">Mid</mat-radio-button> 
+        <mat-radio-button value="mid">Mid</mat-radio-button>
         <mat-radio-button value="senior">Senior</mat-radio-button>
       </mat-radio-group>
-        
-      
+    
+    
       <button mat-raised-button color="primary" type="submit" [disabled]="employeeForm.invalid">
         Add
       </button>
     </form>
-  `,
+    `,
   styles: `
     .employee-form {
       display: flex;

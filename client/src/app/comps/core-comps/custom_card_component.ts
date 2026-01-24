@@ -1,6 +1,6 @@
 // custom-card.component.ts
 import { Component, Input, TemplateRef, ContentChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatRippleModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -50,9 +50,9 @@ export class CardActionsComponent {}
 @Component({
   selector: 'app-custom-card',
   standalone: true,
-  imports: [CommonModule, MatRippleModule],
+  imports: [MatRippleModule],
   template: `
-    <div 
+    <div
       class="custom-card"
       [class.clickable]="clickable"
       [class.elevated]="elevated"
@@ -60,39 +60,53 @@ export class CardActionsComponent {}
       [style.border-color]="borderColor"
       matRipple
       [matRippleDisabled]="!clickable">
-      
+    
       <!-- Image Section -->
-      <div class="card-image" *ngIf="imageUrl">
-        <img [src]="imageUrl" [alt]="imageAlt || 'Card image'" />
-        <div class="image-overlay" *ngIf="imageOverlay">
+      @if (imageUrl) {
+        <div class="card-image">
+          <img [src]="imageUrl" [alt]="imageAlt || 'Card image'" />
+          @if (imageOverlay) {
+            <div class="image-overlay">
+              <ng-content select="app-card-header"></ng-content>
+            </div>
+          }
+        </div>
+      }
+    
+      <!-- Header Section (when no image) -->
+      @if (!imageUrl && hasHeader) {
+        <div class="card-header">
           <ng-content select="app-card-header"></ng-content>
         </div>
-      </div>
-
-      <!-- Header Section (when no image) -->
-      <div class="card-header" *ngIf="!imageUrl && hasHeader">
-        <ng-content select="app-card-header"></ng-content>
-      </div>
-
+      }
+    
       <!-- Content Section -->
       <div class="card-body">
-        <div class="card-title" *ngIf="title">
-          <h3>{{ title }}</h3>
-          <span class="card-subtitle" *ngIf="subtitle">{{ subtitle }}</span>
-        </div>
-
+        @if (title) {
+          <div class="card-title">
+            <h3>{{ title }}</h3>
+            @if (subtitle) {
+              <span class="card-subtitle">{{ subtitle }}</span>
+            }
+          </div>
+        }
+    
         <div class="card-content">
           <ng-content select="app-card-content"></ng-content>
-          <p *ngIf="description">{{ description }}</p>
+          @if (description) {
+            <p>{{ description }}</p>
+          }
         </div>
       </div>
-
+    
       <!-- Actions Section -->
-      <div class="card-actions" *ngIf="hasActions">
-        <ng-content select="app-card-actions"></ng-content>
-      </div>
+      @if (hasActions) {
+        <div class="card-actions">
+          <ng-content select="app-card-actions"></ng-content>
+        </div>
+      }
     </div>
-  `,
+    `,
   styles: [`
     .custom-card {
       position: relative;
@@ -250,126 +264,130 @@ export interface CardData {
   selector: 'app-card-demo',
   standalone: true,
   imports: [
-    CommonModule,
     CustomCardComponent,
     CardHeaderComponent,
     CardContentComponent,
     CardActionsComponent,
     MatButtonModule,
     MatIconModule
-  ],
+],
   template: `
     <div class="demo-container">
       <h1>Custom Card Component Demo</h1>
-
+    
       <div class="demo-section">
         <h2>Basic Cards with Data Input</h2>
         <div class="card-grid">
-          <app-custom-card
-            *ngFor="let card of basicCards"
-            [title]="card.title"
-            [description]="card.description"
-            [clickable]="true"
-            [elevated]="true">
-            <app-card-actions>
-              <button mat-button color="primary">Learn More</button>
-              <button mat-icon-button>
-                <mat-icon>favorite_border</mat-icon>
-              </button>
-            </app-card-actions>
-          </app-custom-card>
+          @for (card of basicCards; track card) {
+            <app-custom-card
+              [title]="card.title"
+              [description]="card.description"
+              [clickable]="true"
+              [elevated]="true">
+              <app-card-actions>
+                <button mat-button color="primary">Learn More</button>
+                <button mat-icon-button>
+                  <mat-icon>favorite_border</mat-icon>
+                </button>
+              </app-card-actions>
+            </app-custom-card>
+          }
         </div>
       </div>
-
+    
       <div class="demo-section">
         <h2>Cards with Images</h2>
         <div class="card-grid">
-          <app-custom-card
-            *ngFor="let card of imageCards"
-            [title]="card.title"
-            [subtitle]="card.subtitle"
-            [description]="card.description"
-            [imageUrl]="card.imageUrl"
-            [imageAlt]="card.imageAlt"
-            [clickable]="true">
-            <app-card-actions>
-              <button mat-raised-button color="primary">View Details</button>
-              <button mat-button>Share</button>
-            </app-card-actions>
-          </app-custom-card>
+          @for (card of imageCards; track card) {
+            <app-custom-card
+              [title]="card.title"
+              [subtitle]="card.subtitle"
+              [description]="card.description"
+              [imageUrl]="card.imageUrl"
+              [imageAlt]="card.imageAlt"
+              [clickable]="true">
+              <app-card-actions>
+                <button mat-raised-button color="primary">View Details</button>
+                <button mat-button>Share</button>
+              </app-card-actions>
+            </app-custom-card>
+          }
         </div>
       </div>
-
+    
       <div class="demo-section">
         <h2>Cards with Image Overlay</h2>
         <div class="card-grid">
-          <app-custom-card
-            *ngFor="let card of overlayCards"
-            [imageUrl]="card.imageUrl"
-            [imageOverlay]="true"
-            [clickable]="true"
-            [elevated]="true">
-            <app-card-header>
-              <h3 style="margin: 0; font-size: 24px;">{{ card.title }}</h3>
-              <p style="margin: 4px 0 0; opacity: 0.9;">{{ card.subtitle }}</p>
-            </app-card-header>
-            <app-card-content>
-              <p>{{ card.description }}</p>
-            </app-card-content>
-            <app-card-actions>
-              <button mat-button style="color: white;">
-                <mat-icon>play_arrow</mat-icon>
-                Play
-              </button>
-              <button mat-icon-button style="color: white;">
-                <mat-icon>bookmark_border</mat-icon>
-              </button>
-            </app-card-actions>
-          </app-custom-card>
+          @for (card of overlayCards; track card) {
+            <app-custom-card
+              [imageUrl]="card.imageUrl"
+              [imageOverlay]="true"
+              [clickable]="true"
+              [elevated]="true">
+              <app-card-header>
+                <h3 style="margin: 0; font-size: 24px;">{{ card.title }}</h3>
+                <p style="margin: 4px 0 0; opacity: 0.9;">{{ card.subtitle }}</p>
+              </app-card-header>
+              <app-card-content>
+                <p>{{ card.description }}</p>
+              </app-card-content>
+              <app-card-actions>
+                <button mat-button style="color: white;">
+                  <mat-icon>play_arrow</mat-icon>
+                  Play
+                </button>
+                <button mat-icon-button style="color: white;">
+                  <mat-icon>bookmark_border</mat-icon>
+                </button>
+              </app-card-actions>
+            </app-custom-card>
+          }
         </div>
       </div>
-
+    
       <div class="demo-section">
         <h2>Custom Styled Cards</h2>
         <div class="card-grid">
-          <app-custom-card
-            *ngFor="let card of customCards"
-            [title]="card.title"
-            [subtitle]="card.subtitle"
-            [description]="card.description"
-            [backgroundColor]="card.metadata?.bgColor"
-            [borderColor]="card.metadata?.borderColor"
-            [elevated]="true">
-            <app-card-content>
-              <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
-                <mat-icon [style.color]="card.metadata?.iconColor">
-                  {{ card.metadata?.icon }}
-                </mat-icon>
-                <span style="font-weight: 500;">{{ card.metadata?.label }}</span>
-              </div>
-            </app-card-content>
-            <app-card-actions>
-              <button mat-stroked-button [color]="card.metadata?.buttonColor">
-                Action
-              </button>
-            </app-card-actions>
-          </app-custom-card>
+          @for (card of customCards; track card) {
+            <app-custom-card
+              [title]="card.title"
+              [subtitle]="card.subtitle"
+              [description]="card.description"
+              [backgroundColor]="card.metadata?.bgColor"
+              [borderColor]="card.metadata?.borderColor"
+              [elevated]="true">
+              <app-card-content>
+                <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
+                  <mat-icon [style.color]="card.metadata?.iconColor">
+                    {{ card.metadata?.icon }}
+                  </mat-icon>
+                  <span style="font-weight: 500;">{{ card.metadata?.label }}</span>
+                </div>
+              </app-card-content>
+              <app-card-actions>
+                <button mat-stroked-button [color]="card.metadata?.buttonColor">
+                  Action
+                </button>
+              </app-card-actions>
+            </app-custom-card>
+          }
         </div>
       </div>
-
+    
       <div class="demo-section">
         <h2>Compact Cards</h2>
         <div class="card-grid compact">
-          <app-custom-card
-            *ngFor="let card of compactCards"
-            [title]="card.title"
-            [description]="card.description"
-            [clickable]="true">
-          </app-custom-card>
+          @for (card of compactCards; track card) {
+            <app-custom-card
+              [title]="card.title"
+              [description]="card.description"
+              [clickable]="true">
+            </app-custom-card>
+          }
         </div>
       </div>
     </div>
-  `,
+    `,
   styles: [`
     .demo-container {
       padding: 24px;

@@ -10,7 +10,7 @@ import { CdkDragEnd } from '@angular/cdk/drag-drop';
   template: `
     <div class="carousel-container">
       <div class="carousel-wrapper">
-        <div 
+        <div
           #track
           class="carousel-track"
           [style.transform]="'translateX(' + translateX + 'px)'"
@@ -18,48 +18,62 @@ import { CdkDragEnd } from '@angular/cdk/drag-drop';
           [cdkDragFreeDragPosition]="dragPosition"
           (cdkDragEnded)="onDragEnd($event)"
           [cdkDragConstrainPosition]="constrainDragPosition">
-          <div 
-            class="carousel-slide" 
-            *ngFor="let item of items; let i = index"
-            [class.active]="i === currentIndex">
-            <img [src]="item.image" [alt]="item.title || 'Carousel image'">
-            <div class="carousel-content" *ngIf="item.title || item.description">
-              <h3 *ngIf="item.title">{{ item.title }}</h3>
-              <p *ngIf="item.description">{{ item.description }}</p>
+          @for (item of items; track item; let i = $index) {
+            <div
+              class="carousel-slide"
+              [class.active]="i === currentIndex">
+              <img [src]="item.image" [alt]="item.title || 'Carousel image'">
+              @if (item.title || item.description) {
+                <div class="carousel-content">
+                  @if (item.title) {
+                    <h3>{{ item.title }}</h3>
+                  }
+                  @if (item.description) {
+                    <p>{{ item.description }}</p>
+                  }
+                </div>
+              }
             </div>
-          </div>
+          }
         </div>
-
-        <button 
-          mat-icon-button 
-          class="carousel-nav prev"
-          (click)="previous()"
-          [disabled]="currentIndex === 0 && !loop"
-          *ngIf="showNavigation">
-          <mat-icon>chevron_left</mat-icon>
-        </button>
-
-        <button 
-          mat-icon-button 
-          class="carousel-nav next"
-          (click)="next()"
-          [disabled]="currentIndex === items.length - 1 && !loop"
-          *ngIf="showNavigation">
-          <mat-icon>chevron_right</mat-icon>
-        </button>
+    
+        @if (showNavigation) {
+          <button
+            mat-icon-button
+            class="carousel-nav prev"
+            (click)="previous()"
+            [disabled]="currentIndex === 0 && !loop"
+            >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+        }
+    
+        @if (showNavigation) {
+          <button
+            mat-icon-button
+            class="carousel-nav next"
+            (click)="next()"
+            [disabled]="currentIndex === items.length - 1 && !loop"
+            >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        }
       </div>
-
-      <div class="carousel-indicators" *ngIf="showIndicators">
-        <button
-          *ngFor="let item of items; let i = index"
-          class="indicator"
-          [class.active]="i === currentIndex"
-          (click)="goToSlide(i)"
-          [attr.aria-label]="'Go to slide ' + (i + 1)">
-        </button>
-      </div>
+    
+      @if (showIndicators) {
+        <div class="carousel-indicators">
+          @for (item of items; track item; let i = $index) {
+            <button
+              class="indicator"
+              [class.active]="i === currentIndex"
+              (click)="goToSlide(i)"
+              [attr.aria-label]="'Go to slide ' + (i + 1)">
+            </button>
+          }
+        </div>
+      }
     </div>
-  `,
+    `,
   styles: [`
     .carousel-container {
       width: 100%;

@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 
 // Interface for Jumbotron data
-export interface JumbotronData {
+export interface JumbotronDataModel {
   title?: string;
   subtitle?: string;
   description?: string;
@@ -31,32 +31,29 @@ export interface JumbotronButton {
 
 // Template directive for custom content
 @Component({
-  selector: 'app-jumbotron-content',
+  selector: 'odm-jumbotron-content',
   standalone: true,
   template: '<ng-content></ng-content>'
 })
 export class JumbotronContentComponent {}
 
 @Component({
-  selector: 'app-jumbotron-actions',
+  selector: 'odm-jumbotron-actions',
   standalone: true,
   template: '<ng-content></ng-content>'
 })
 export class JumbotronActionsComponent {}
 
 @Component({
-  selector: 'app-jumbotron',
+  selector: 'odm-jumbotron',
   standalone: true,
   imports: [
-    CommonModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule,
-    // JumbotronContentComponent,
-    // JumbotronActionsComponent
-  ],
+    MatCardModule
+],
   template: `
-    <div 
+    <div
       class="jumbotron-container"
       [class.has-background]="data.imagePosition === 'background'"
       [class.theme-primary]="data.theme === 'primary'"
@@ -71,67 +68,87 @@ export class JumbotronActionsComponent {}
       [style.height]="data.height || 'auto'"
       [style.margin]="data.margin || '6rem 0'"
       [style.background-image]="data.imagePosition === 'background' ? 'url(' + data.imageUrl + ')' : null">
-      
+    
       <!-- Background Overlay -->
-      <div 
-        *ngIf="data.imagePosition === 'background' && data.overlay"
-        class="background-overlay"
-        [style.opacity]="data.overlayOpacity || 0.5">
-      </div>
-
-      <!-- Image Section (non-background) -->
-      <div 
-        *ngIf="data.imageUrl && data.imagePosition !== 'background'"
+      @if (data.imagePosition === 'background' && data.overlay) {
+        <div
+          class="background-overlay"
+          [style.opacity]="data.overlayOpacity || 0.5">
+        </div>
+      }
+    
+      <!-- <div
+      *ngIf="data.imagePosition === 'background' && data.overlay"
+      class="background-overlay"
+      [style.opacity]="data.overlayOpacity || 0.5">
+    </div> -->
+    
+    <!-- Image Section (non-background) -->
+    @if (data.imageUrl && data.imagePosition !== 'background') {
+      <div
         class="jumbotron-image">
-        <img 
-          [src]="data.imageUrl" 
+        <img
+          [src]="data.imageUrl"
           [alt]="data.imageAlt || 'Jumbotron image'"
           (load)="onImageLoad()"
           (error)="onImageError($event)">
       </div>
-
-      <!-- Content Section -->
-      <div class="jumbotron-content">
-        <!-- Default Content -->
-        <div *ngIf="!hasCustomContent" class="default-content">
-          <h1 *ngIf="data.title" class="jumbotron-title">
-            {{ data.title }}
-          </h1>
-          
-          <h2 *ngIf="data.subtitle" class="jumbotron-subtitle">
-            {{ data.subtitle }}
-          </h2>
-          
-          <p *ngIf="data.description" class="jumbotron-description">
-            {{ data.description }}
-          </p>
-
+    }
+    
+    <!-- Content Section -->
+    <div class="jumbotron-content">
+      <!-- Default Content -->
+      @if (!hasCustomContent) {
+        <div class="default-content">
+          @if (data.title) {
+            <h1 class="jumbotron-title">
+              {{ data.title }}
+            </h1>
+          }
+          @if (data.subtitle) {
+            <h2 class="jumbotron-subtitle">
+              {{ data.subtitle }}
+            </h2>
+          }
+          @if (data.description) {
+            <p class="jumbotron-description">
+              {{ data.description }}
+            </p>
+          }
           <!-- Default Buttons -->
-          <div *ngIf="data.buttons && data.buttons.length > 0 && !hasCustomActions" class="jumbotron-actions">
-            <button 
-              *ngFor="let btn of data.buttons"
-              mat-button
-              [class.mat-raised-button]="btn.style === 'raised'"
-              [class.mat-stroked-button]="btn.style === 'stroked'"
-              [class.mat-flat-button]="btn.style === 'flat'"
-              [color]="btn.color || 'primary'"
-              (click)="onButtonClick(btn)">
-              <mat-icon *ngIf="btn.icon">{{ btn.icon }}</mat-icon>
-              {{ btn.label }}
-            </button>
-          </div>
+          @if (data.buttons && data.buttons.length > 0 && !hasCustomActions) {
+            <div class="jumbotron-actions">
+              @for (btn of data.buttons; track btn) {
+                <button
+                  mat-button
+                  [class.mat-raised-button]="btn.style === 'raised'"
+                  [class.mat-stroked-button]="btn.style === 'stroked'"
+                  [class.mat-flat-button]="btn.style === 'flat'"
+                  [color]="btn.color || 'primary'"
+                  (click)="onButtonClick(btn)">
+                  @if (btn.icon) {
+                    <mat-icon>{{ btn.icon }}</mat-icon>
+                  }
+                  {{ btn.label }}
+                </button>
+              }
+            </div>
+          }
         </div>
-
-        <!-- Custom Content Projection -->
-        <ng-content select="app-jumbotron-content"></ng-content>
-
-        <!-- Custom Actions Projection -->
-        <div *ngIf="hasCustomActions" class="jumbotron-actions custom-actions">
-          <ng-content select="app-jumbotron-actions"></ng-content>
+      }
+    
+      <!-- Custom Content Projection -->
+      <ng-content select="odm-jumbotron-content"></ng-content>
+    
+      <!-- Custom Actions Projection -->
+      @if (hasCustomActions) {
+        <div class="jumbotron-actions custom-actions">
+          <ng-content select="odm-jumbotron-actions"></ng-content>
         </div>
-      </div>
+      }
     </div>
-  `,
+    </div>
+    `,
   styles: [`
     .jumbotron-container {
       position: relative;
@@ -323,7 +340,7 @@ export class JumbotronActionsComponent {}
   `]
 })
 export class JumboTronComponent {
-  @Input() data: JumbotronData = {
+  @Input() data: JumbotronDataModel = {
     theme: 'light',
     imagePosition: 'left',
     overlay: true,
@@ -333,7 +350,7 @@ export class JumboTronComponent {
   @Output() buttonClick = new EventEmitter<JumbotronButton>();
   @Output() imageLoad = new EventEmitter<void>();
   @Output() imageError = new EventEmitter<Event>();
-  @Output() dataChange = new EventEmitter<JumbotronData>();
+  @Output() dataChange = new EventEmitter<JumbotronDataModel>();
 
   @ContentChild(JumbotronContentComponent) customContent?: JumbotronContentComponent;
   @ContentChild(JumbotronActionsComponent) customActions?: JumbotronActionsComponent;
@@ -358,7 +375,7 @@ export class JumboTronComponent {
     this.imageError.emit(event);
   }
 
-  updateData(newData: Partial<JumbotronData>): void {
+  updateData(newData: Partial<JumbotronDataModel>): void {
     this.data = { ...this.data, ...newData };
     this.dataChange.emit(this.data);
   }
@@ -366,38 +383,38 @@ export class JumboTronComponent {
 
 // Example usage component
 @Component({
-  selector: 'app-jumbotron-demo',
+  selector: 'odm-jumbotron-demo',
   standalone: true,
   imports: [
-    CommonModule,
     JumboTronComponent,
     JumbotronContentComponent,
     JumbotronActionsComponent,
     MatButtonModule,
-    MatIconModule
-  ],
+    MatIconModule,
+    CommonModule,
+],
   template: `
     <div class="demo-container">
       <h1>Jumbotron Component Demo</h1>
-
+    
       <!-- Example 1: Basic with data binding -->
       <h2>1. Basic Jumbotron (Left Image)</h2>
-      <app-jumbotron 
+      <odm-jumbotron
         [data]="basicData"
         (buttonClick)="handleButtonClick($event)"
         (imageLoad)="handleImageLoad()">
-      </app-jumbotron>
-
+      </odm-jumbotron>
+    
       <!-- Example 2: Background Image -->
       <h2>2. Background Image with Overlay</h2>
-      <app-jumbotron [data]="backgroundData"></app-jumbotron>
-
+      <odm-jumbotron [data]="backgroundData"></odm-jumbotron>
+    
       <!-- Example 3: Custom Content -->
       <h2>3. Custom Content & Actions</h2>
-      <app-jumbotron 
+      <odm-jumbotron
         [data]="customData"
         (buttonClick)="handleCustomAction($event)">
-        <app-jumbotron-content>
+        <odm-jumbotron-content>
           <div class="custom-content">
             <h1>🚀 Custom Content Example</h1>
             <p>This content is completely custom and projected into the jumbotron.</p>
@@ -407,8 +424,8 @@ export class JumboTronComponent {
               <li>Event emitters</li>
             </ul>
           </div>
-        </app-jumbotron-content>
-        <app-jumbotron-actions>
+        </odm-jumbotron-content>
+        <odm-jumbotron-actions>
           <button mat-raised-button color="primary" (click)="customAction1()">
             <mat-icon>star</mat-icon>
             Custom Action 1
@@ -417,27 +434,29 @@ export class JumboTronComponent {
             <mat-icon>favorite</mat-icon>
             Custom Action 2
           </button>
-        </app-jumbotron-actions>
-      </app-jumbotron>
-
+        </odm-jumbotron-actions>
+      </odm-jumbotron>
+    
       <!-- Example 4: Top Image Layout -->
       <h2>4. Top Image Layout</h2>
-      <app-jumbotron [data]="topImageData"></app-jumbotron>
-
+      <odm-jumbotron [data]="topImageData"></odm-jumbotron>
+    
       <!-- Example 5: Themed Jumbotrons -->
       <h2>5. Different Themes</h2>
       <div class="theme-grid">
-        <app-jumbotron [data]="themeData1"></app-jumbotron>
-        <app-jumbotron [data]="themeData2"></app-jumbotron>
+        <odm-jumbotron [data]="themeData1"></odm-jumbotron>
+        <odm-jumbotron [data]="themeData2"></odm-jumbotron>
       </div>
-
+    
       <!-- Output Display -->
-      <div class="output" *ngIf="lastAction">
-        <h3>Last Action:</h3>
-        <pre>{{ lastAction | json }}</pre>
-      </div>
+      @if (lastAction) {
+        <div class="output">
+          <h3>Last Action:</h3>
+          <pre>{{ lastAction | json }}</pre>
+        </div>
+      }
     </div>
-  `,
+    `,
   styles: [`
     .demo-container {
       padding: 24px;
@@ -456,7 +475,7 @@ export class JumboTronComponent {
       font-size: 1.5rem;
     }
 
-    app-jumbotron {
+    odm-jumbotron {
       margin-bottom: 24px;
       display: block;
     }
@@ -510,7 +529,7 @@ export class JumboTronComponent {
 export class JumbotronDemoComponent {
   lastAction: any = null;
 
-  basicData: JumbotronData = {
+  basicData: JumbotronDataModel = {
     title: 'Welcome to Our Platform',
     subtitle: 'The best solution for your business',
     description: 'Discover how our innovative platform can help you achieve your goals faster and more efficiently than ever before.',
@@ -524,7 +543,7 @@ export class JumbotronDemoComponent {
     ]
   };
 
-  backgroundData: JumbotronData = {
+  backgroundData: JumbotronDataModel = {
     title: 'Experience the Future',
     subtitle: 'Innovation meets excellence',
     description: 'Join thousands of satisfied customers who have transformed their business with our cutting-edge solutions.',
@@ -538,13 +557,13 @@ export class JumbotronDemoComponent {
     ]
   };
 
-  customData: JumbotronData = {
+  customData: JumbotronDataModel = {
     imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop',
     imagePosition: 'right',
     theme: 'light'
   };
 
-  topImageData: JumbotronData = {
+  topImageData: JumbotronDataModel = {
     title: 'Top Image Layout',
     subtitle: 'Perfect for showcasing products',
     description: 'This layout places the image at the top, creating a card-like appearance ideal for product displays or featured content.',
@@ -556,7 +575,7 @@ export class JumbotronDemoComponent {
     ]
   };
 
-  themeData1: JumbotronData = {
+  themeData1: JumbotronDataModel = {
     title: 'Primary Theme',
     subtitle: 'Bold and confident',
     description: 'Make a statement with vibrant gradients.',
@@ -567,7 +586,7 @@ export class JumbotronDemoComponent {
     ]
   };
 
-  themeData2: JumbotronData = {
+  themeData2: JumbotronDataModel = {
     title: 'Accent Theme',
     subtitle: 'Eye-catching design',
     description: 'Stand out with beautiful color schemes.',

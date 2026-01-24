@@ -30,8 +30,8 @@ import { Component } from '@angular/core';
         }
       </odm-uncontained-data-carousel>
 
-      <app-jumbotron></app-jumbotron>
-      <!-- <app-jumbotron-demo></app-jumbotron-demo> -->
+      <odm-jumbotron></odm-jumbotron>
+      <!-- <odm-jumbotron-demo></odm-jumbotron-demo> -->
       
     
         

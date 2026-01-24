@@ -10,16 +10,18 @@ import ResizeObserver from 'resize-observer-polyfill';
   standalone: false,
   template: `
     <div class="carousel-container">
-      <button 
-        mat-icon-button 
-        class="carousel-nav prev"
-        [disabled]="!canScrollPrev"
-        (click)="scrollPrev()"
-        *ngIf="showNavigation">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-
-      <div 
+      @if (showNavigation) {
+        <button
+          mat-icon-button
+          class="carousel-nav prev"
+          [disabled]="!canScrollPrev"
+          (click)="scrollPrev()"
+          >
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+      }
+    
+      <div
         #scrollContainer
         class="carousel-scroll-container"
         cdkScrollable
@@ -28,27 +30,32 @@ import ResizeObserver from 'resize-observer-polyfill';
           <ng-content></ng-content>
         </div>
       </div>
-
-      <button 
-        mat-icon-button 
-        class="carousel-nav next"
-        [disabled]="!canScrollNext"
-        (click)="scrollNext()"
-        *ngIf="showNavigation">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
+    
+      @if (showNavigation) {
+        <button
+          mat-icon-button
+          class="carousel-nav next"
+          [disabled]="!canScrollNext"
+          (click)="scrollNext()"
+          >
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      }
     </div>
-
-    <div class="carousel-indicators" *ngIf="showIndicators">
-      <button
-        *ngFor="let page of pages; let i = index"
-        class="indicator"
-        [class.active]="i === currentPage"
-        (click)="scrollToPage(i)"
-        [attr.aria-label]="'Go to page ' + (i + 1)">
-      </button>
-    </div>
-  `,
+    
+    @if (showIndicators) {
+      <div class="carousel-indicators">
+        @for (page of pages; track page; let i = $index) {
+          <button
+            class="indicator"
+            [class.active]="i === currentPage"
+            (click)="scrollToPage(i)"
+            [attr.aria-label]="'Go to page ' + (i + 1)">
+          </button>
+        }
+      </div>
+    }
+    `,
   styles: [`
     :host {
       display: block;
