@@ -1,14 +1,24 @@
 // custom-card.component.ts
-import { Component, Input, TemplateRef, ContentChild } from '@angular/core';
+import { Component, Input, ContentChild } from '@angular/core';
+import { CardItem } from './dynamic-grid-enum';
 
-import { MatRippleModule } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+// Data model for card
+export interface CardData {
+  id?: string | number;
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  backgroundColor?: string;
+  borderColor?: string;
+  metadata?: any;
+}
 
 // Directive to mark card header content
 @Component({
   selector: 'app-card-header',
-  standalone: true,
+  standalone: false,
   template: '<ng-content></ng-content>',
   styles: [`
     :host {
@@ -18,10 +28,23 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class CardHeaderComponent {}
 
-// Directive to mark card content
+// Directive to mark card header content
+@Component({
+  selector: 'app-card-footer',
+  standalone: false,
+  template: '<ng-content></ng-content>',
+  styles: [`
+    :host {
+      display: block;
+    }
+  `]
+})
+export class CardFooterComponent {}
+
+// Directive to mark card footer content
 @Component({
   selector: 'app-card-content',
-  standalone: true,
+  standalone: false,
   template: '<ng-content></ng-content>',
   styles: [`
     :host {
@@ -34,7 +57,7 @@ export class CardContentComponent {}
 // Directive to mark card actions
 @Component({
   selector: 'app-card-actions',
-  standalone: true,
+  standalone: false,
   template: '<ng-content></ng-content>',
   styles: [`
     :host {
@@ -48,12 +71,12 @@ export class CardActionsComponent {}
 
 // Main custom card component
 @Component({
-  selector: 'app-custom-card',
-  standalone: true,
-  imports: [MatRippleModule],
+  selector: 'odm-custom-card',
+  standalone: false,
   template: `
     <div
       class="custom-card"
+      [class.placeholder]="isPlaceholder"
       [class.clickable]="clickable"
       [class.elevated]="elevated"
       [style.background]="backgroundColor"
@@ -98,6 +121,12 @@ export class CardActionsComponent {}
           }
         </div>
       </div>
+
+      @if (!imageUrl && hasFooter) {
+        <div class="card-footer">
+          <ng-content select="app-card-footer"></ng-content>
+        </div>
+      }
     
       <!-- Actions Section -->
       @if (hasActions) {
@@ -108,7 +137,14 @@ export class CardActionsComponent {}
     </div>
     `,
   styles: [`
+    :host {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+
     .custom-card {
+      height: 100%;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -122,6 +158,7 @@ export class CardActionsComponent {}
       box-shadow: 
         0 1px 3px rgba(100, 150, 200, 0.08),
         0 1px 2px rgba(100, 150, 200, 0.06);
+      cursor: pointer;
     }
 
     .custom-card.elevated {
@@ -145,6 +182,73 @@ export class CardActionsComponent {}
     .custom-card.clickable:active {
       transform: translateY(0);
     }
+
+
+    /* from dynamic card below */
+    // .dynamic-card {
+    //   height: 100%;
+    //   display: flex;
+    //   flex-direction: column;
+    //   overflow: hidden;
+    //   transition: transform 0.3s ease, box-shadow 0.3s ease;
+    //   cursor: pointer;
+    // }
+
+
+    .custom-card:hover:not(.placeholder) {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-card.placeholder {
+      background: linear-gradient(135deg, #e0e0e0 25%, #f5f5f5 25%, #f5f5f5 50%, #e0e0e0 50%, #e0e0e0 75%, #f5f5f5 75%, #f5f5f5);
+      background-size: 20px 20px;
+      cursor: default;
+    }
+
+    .card-image-container {
+      width: 100%;
+      flex: 1;
+      overflow: hidden;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    mat-card-content {
+      padding: 16px;
+      flex-shrink: 0;
+    }
+
+    mat-card-title {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    mat-card-subtitle {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.6);
+      margin-bottom: 8px;
+    }
+
+    .card-text {
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(0, 0, 0, 0.7);
+      margin: 0;
+    }
+
+    /* Dynamic Card Styles Above */
+
+
 
     .card-image {
       position: relative;
@@ -183,6 +287,10 @@ export class CardActionsComponent {}
     .card-header {
       padding: 16px 16px 0;
     }
+    
+    .card-footer {
+      padding: 0 16px 16px;
+    }
 
     .card-body {
       padding: 16px;
@@ -190,7 +298,7 @@ export class CardActionsComponent {}
     }
 
     .card-title h3 {
-      margin: 0 0 4px;
+      margin: 0 0 8px;
       font-size: 20px;
       font-weight: 500;
       color: #1a237e;
@@ -201,7 +309,7 @@ export class CardActionsComponent {}
       display: block;
       font-size: 14px;
       color: #5c6bc0;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       font-weight: 400;
     }
 
@@ -210,6 +318,7 @@ export class CardActionsComponent {}
       font-size: 14px;
       line-height: 1.6;
       letter-spacing: 0.25px;
+      flex-shrink: 0;
     }
 
     .card-content p {
@@ -233,6 +342,9 @@ export class CardActionsComponent {}
   `]
 })
 export class CustomCardComponent {
+  @Input() cardData?: CardItem | null = null;
+  @Input() isPlaceholder: boolean = false;
+
   @Input() title?: string;
   @Input() subtitle?: string;
   @Input() description?: string;
@@ -245,307 +357,8 @@ export class CustomCardComponent {
   @Input() borderColor?: string;
 
   @ContentChild(CardHeaderComponent) hasHeader?: CardHeaderComponent;
+  @ContentChild(CardHeaderComponent) hasFooter?: CardFooterComponent;
   @ContentChild(CardActionsComponent) hasActions?: CardActionsComponent;
 }
 
-// Data model for card
-export interface CardData {
-  id?: string | number;
-  title?: string;
-  subtitle?: string;
-  description?: string;
-  imageUrl?: string;
-  imageAlt?: string;
-  metadata?: any;
-}
 
-// Demo component showing usage
-@Component({
-  selector: 'app-card-demo',
-  standalone: true,
-  imports: [
-    CustomCardComponent,
-    CardHeaderComponent,
-    CardContentComponent,
-    CardActionsComponent,
-    MatButtonModule,
-    MatIconModule
-],
-  template: `
-    <div class="demo-container">
-      <h1>Custom Card Component Demo</h1>
-    
-      <div class="demo-section">
-        <h2>Basic Cards with Data Input</h2>
-        <div class="card-grid">
-          @for (card of basicCards; track card) {
-            <app-custom-card
-              [title]="card.title"
-              [description]="card.description"
-              [clickable]="true"
-              [elevated]="true">
-              <app-card-actions>
-                <button mat-button color="primary">Learn More</button>
-                <button mat-icon-button>
-                  <mat-icon>favorite_border</mat-icon>
-                </button>
-              </app-card-actions>
-            </app-custom-card>
-          }
-        </div>
-      </div>
-    
-      <div class="demo-section">
-        <h2>Cards with Images</h2>
-        <div class="card-grid">
-          @for (card of imageCards; track card) {
-            <app-custom-card
-              [title]="card.title"
-              [subtitle]="card.subtitle"
-              [description]="card.description"
-              [imageUrl]="card.imageUrl"
-              [imageAlt]="card.imageAlt"
-              [clickable]="true">
-              <app-card-actions>
-                <button mat-raised-button color="primary">View Details</button>
-                <button mat-button>Share</button>
-              </app-card-actions>
-            </app-custom-card>
-          }
-        </div>
-      </div>
-    
-      <div class="demo-section">
-        <h2>Cards with Image Overlay</h2>
-        <div class="card-grid">
-          @for (card of overlayCards; track card) {
-            <app-custom-card
-              [imageUrl]="card.imageUrl"
-              [imageOverlay]="true"
-              [clickable]="true"
-              [elevated]="true">
-              <app-card-header>
-                <h3 style="margin: 0; font-size: 24px;">{{ card.title }}</h3>
-                <p style="margin: 4px 0 0; opacity: 0.9;">{{ card.subtitle }}</p>
-              </app-card-header>
-              <app-card-content>
-                <p>{{ card.description }}</p>
-              </app-card-content>
-              <app-card-actions>
-                <button mat-button style="color: white;">
-                  <mat-icon>play_arrow</mat-icon>
-                  Play
-                </button>
-                <button mat-icon-button style="color: white;">
-                  <mat-icon>bookmark_border</mat-icon>
-                </button>
-              </app-card-actions>
-            </app-custom-card>
-          }
-        </div>
-      </div>
-    
-      <div class="demo-section">
-        <h2>Custom Styled Cards</h2>
-        <div class="card-grid">
-          @for (card of customCards; track card) {
-            <app-custom-card
-              [title]="card.title"
-              [subtitle]="card.subtitle"
-              [description]="card.description"
-              [backgroundColor]="card.metadata?.bgColor"
-              [borderColor]="card.metadata?.borderColor"
-              [elevated]="true">
-              <app-card-content>
-                <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
-                  <mat-icon [style.color]="card.metadata?.iconColor">
-                    {{ card.metadata?.icon }}
-                  </mat-icon>
-                  <span style="font-weight: 500;">{{ card.metadata?.label }}</span>
-                </div>
-              </app-card-content>
-              <app-card-actions>
-                <button mat-stroked-button [color]="card.metadata?.buttonColor">
-                  Action
-                </button>
-              </app-card-actions>
-            </app-custom-card>
-          }
-        </div>
-      </div>
-    
-      <div class="demo-section">
-        <h2>Compact Cards</h2>
-        <div class="card-grid compact">
-          @for (card of compactCards; track card) {
-            <app-custom-card
-              [title]="card.title"
-              [description]="card.description"
-              [clickable]="true">
-            </app-custom-card>
-          }
-        </div>
-      </div>
-    </div>
-    `,
-  styles: [`
-    .demo-container {
-      padding: 24px;
-      max-width: 1400px;
-      margin: 0 auto;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e8f0f7 100%);
-      min-height: 100vh;
-    }
-
-    h1 {
-      color: #1a237e;
-      margin-bottom: 32px;
-      font-size: 32px;
-      font-weight: 400;
-    }
-
-    h2 {
-      color: #3949ab;
-      margin-bottom: 16px;
-      font-size: 24px;
-      font-weight: 400;
-    }
-
-    .demo-section {
-      margin-bottom: 48px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-
-    .card-grid.compact {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 16px;
-    }
-
-    @media (max-width: 768px) {
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  `]
-})
-export class CardDemoComponent {
-  basicCards: CardData[] = [
-    {
-      id: 1,
-      title: 'Ocean Breeze',
-      description: 'Experience the calming sensation of coastal winds and gentle waves rolling onto sandy shores.'
-    },
-    {
-      id: 2,
-      title: 'Mountain Vista',
-      description: 'Discover breathtaking views from peaks that touch the sky, where eagles soar and clouds drift by.'
-    },
-    {
-      id: 3,
-      title: 'Forest Path',
-      description: 'Wander through ancient woodlands where sunlight filters through emerald canopies.'
-    }
-  ];
-
-  imageCards: CardData[] = [
-    {
-      id: 4,
-      title: 'Sunset Paradise',
-      subtitle: 'Nature Photography',
-      description: 'Golden hour captures the magic where sky meets earth in brilliant hues.',
-      imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
-      imageAlt: 'Beautiful sunset over mountains'
-    },
-    {
-      id: 5,
-      title: 'Urban Dreams',
-      subtitle: 'City Life',
-      description: 'The pulse of modern life captured in steel, glass, and endless possibilities.',
-      imageUrl: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop',
-      imageAlt: 'Modern city skyline'
-    },
-    {
-      id: 6,
-      title: 'Serene Waters',
-      subtitle: 'Landscape',
-      description: 'Peaceful lakes reflecting the beauty of nature in perfect stillness.',
-      imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
-      imageAlt: 'Calm lake with mountains'
-    }
-  ];
-
-  overlayCards: CardData[] = [
-    {
-      id: 7,
-      title: 'Adventure Awaits',
-      subtitle: 'Explore the Unknown',
-      description: 'Journey into uncharted territories and create unforgettable memories.',
-      imageUrl: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800&h=600&fit=crop'
-    },
-    {
-      id: 8,
-      title: 'Digital Innovation',
-      subtitle: 'Technology & Future',
-      description: 'Shaping tomorrow with cutting-edge solutions and creative thinking.',
-      imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop'
-    }
-  ];
-
-  customCards: CardData[] = [
-    {
-      id: 9,
-      title: 'Success Metrics',
-      subtitle: 'Performance Dashboard',
-      description: 'Track your progress with detailed analytics and insights.',
-      metadata: {
-        bgColor: 'linear-gradient(135deg, rgba(232, 245, 233, 0.9) 0%, rgba(200, 230, 201, 0.9) 100%)',
-        borderColor: 'rgba(129, 199, 132, 0.5)',
-        icon: 'trending_up',
-        iconColor: '#2e7d32',
-        label: '+15.3% Growth',
-        buttonColor: 'primary'
-      }
-    },
-    {
-      id: 10,
-      title: 'Team Collaboration',
-      subtitle: 'Workspace Tools',
-      description: 'Connect with your team and boost productivity together.',
-      metadata: {
-        bgColor: 'linear-gradient(135deg, rgba(243, 229, 245, 0.9) 0%, rgba(225, 190, 231, 0.9) 100%)',
-        borderColor: 'rgba(186, 104, 200, 0.5)',
-        icon: 'groups',
-        iconColor: '#7b1fa2',
-        label: '24 Active Members',
-        buttonColor: 'accent'
-      }
-    },
-    {
-      id: 11,
-      title: 'Notifications',
-      subtitle: 'Stay Updated',
-      description: 'Never miss important updates and announcements.',
-      metadata: {
-        bgColor: 'linear-gradient(135deg, rgba(255, 243, 224, 0.9) 0%, rgba(255, 224, 178, 0.9) 100%)',
-        borderColor: 'rgba(255, 167, 38, 0.5)',
-        icon: 'notifications_active',
-        iconColor: '#ef6c00',
-        label: '3 New Messages',
-        buttonColor: 'warn'
-      }
-    }
-  ];
-
-  compactCards: CardData[] = [
-    { id: 12, title: 'Quick Link 1', description: 'Fast access to your favorite features.' },
-    { id: 13, title: 'Quick Link 2', description: 'Navigate efficiently with shortcuts.' },
-    { id: 14, title: 'Quick Link 3', description: 'Streamline your workflow today.' },
-    { id: 15, title: 'Quick Link 4', description: 'Discover powerful tools at your fingertips.' }
-  ];
-}

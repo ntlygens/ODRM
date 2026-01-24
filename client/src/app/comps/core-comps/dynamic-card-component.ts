@@ -3,7 +3,7 @@ import { CardItem, Orientation } from "./dynamic-grid-enum";
 
 
 @Component({
-  selector: 'odm-dynemic-card',
+  selector: 'odm-dynamic-card',
     standalone: false,
     template: ` 
     <mat-card [class.placeholder]="isPlaceholder" class="dynamic-card">
@@ -21,7 +21,7 @@ import { CardItem, Orientation } from "./dynamic-grid-enum";
         @if (!isPlaceholder) {
           <mat-card-title>{{ cardData?.title }}</mat-card-title>
           <mat-card-subtitle>{{ cardData?.subtitle }}</mat-card-subtitle>
-          <p class="card-text">{{ cardData?.content }}</p>
+          <p class="card-text">{{ cardData!.content }}</p>
         }
         
       </mat-card-content>
@@ -97,8 +97,7 @@ import { CardItem, Orientation } from "./dynamic-grid-enum";
 })
 export class DynamicCardComponent implements OnInit, AfterContentInit {
   @Input() cardData?: CardItem | null = null;
-  @Input() isPlaceholder?: boolean = false;
-  @Input() orientation?: Orientation = Orientation.LANDSCAPE;
+  @Input() isPlaceholder: boolean = false;
 
   ngOnInit() {
     console.log('DynamicCardComponent initialized.');

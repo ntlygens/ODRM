@@ -8,8 +8,9 @@ import { DataCarousel } from './data-carousel';
 import { UncontainedDataCarousel } from './uncontained-data-carousel';
 import { CarouselItem } from './carousel-item';
 import { DynamicContentGridComponent } from './dynamic-content-grid';
-import { DynamicCardComponent } from './dynamic-card-component';
 import { DynamicGridComponent } from './dynamic-grid-component';
+import { DynamicCardComponent } from './dynamic-card-component';
+import { CustomCardComponent, CardHeaderComponent, CardFooterComponent, CardContentComponent, CardActionsComponent } from './custom_card_component';
 
 
 @NgModule({
@@ -20,8 +21,13 @@ import { DynamicGridComponent } from './dynamic-grid-component';
     UncontainedDataCarousel,
     CarouselItem,
     DynamicContentGridComponent,
+    DynamicGridComponent,
     DynamicCardComponent,
-    DynamicGridComponent
+    CustomCardComponent,
+    CardHeaderComponent,
+    CardFooterComponent,
+    CardContentComponent,
+    CardActionsComponent
     
   ],
   imports: [
@@ -37,9 +43,10 @@ import { DynamicGridComponent } from './dynamic-grid-component';
     DataCarousel,
     UncontainedDataCarousel,
     CarouselItem,
-    DynamicCardComponent,
     DynamicGridComponent,
-    DynamicContentGridComponent
+    DynamicCardComponent,
+    DynamicContentGridComponent,
+    CustomCardComponent
     
   ]
 })

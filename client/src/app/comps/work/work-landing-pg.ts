@@ -20,62 +20,33 @@ export interface Tile {
     <odm-jumbotron class="jumbotronBanner" [data]="jumbotronBannerData"></odm-jumbotron>
     <mat-grid-list style="width: 100%; height: 100%;" cols="4" gutterSize="8" rowHeight="2:1">
       <mat-grid-tile>
-        <app-custom-card
+        <odm-custom-card
           title="Total Projects"
           description="You have 12 active projects.">
           <mat-icon matCardIcon>folder_open</mat-icon>
-        </app-custom-card>
+        </odm-custom-card>
       </mat-grid-tile>
       <mat-grid-tile>
-        <app-custom-card
+        <odm-dynamic-card
+          [isPlaceholder]="true" >
+        </odm-dynamic-card>
+        <!-- <odm-custom-card
           title="Total Projects"
           description="You have 12 active projects.">
           <mat-icon matCardIcon>folder_open</mat-icon>
-        </app-custom-card>
+        </odm-custom-card> -->
       </mat-grid-tile>
       <mat-grid-tile>
-        <app-custom-card
+        <odm-custom-card
           title="Total Projects"
           description="You have 12 active projects.">
           <mat-icon matCardIcon>folder_open</mat-icon>
-        </app-custom-card>
+        </odm-custom-card>
       </mat-grid-tile>
     </mat-grid-list> 
-    <div style="gap: 10px; justify-content: space-between; margin: 20px 0;">
-      <app-dc-grid></app-dc-grid>
-      <!-- <mat-grid-list cols="4" rowHeight="100px" gutterSize="10px">
-        @for (tile of tiles; track tile) {
-        <mat-grid-tile
-          [colspan]="tile.cols"
-          [rowspan]="tile.rows"
-          [style.background-color]="tile.color"
-          [style.background-image]="tile.imageUrl ? 'url(' + tile.imageUrl + ')' : 'none'"
-          [style.background-size]="tile.imageUrl ? 'cover' : 'initial'"
-          [style.background-position]="tile.imageUrl ? 'center' : 'initial'"
-          
-          >{{tile.text}}</mat-grid-tile>
-        }  
-      </mat-grid-list>
     
-      <app-custom-card
-        style="flex: 2;"
-        title="Work Landing Page Card"
-        subtitle="This is a custom card component used in the Work Landing Page."  
-        description="this is the description of the content contained with the card that is being dispoalyed."
-        imageUrl="./assets/core-assets/imgs/merchant_gui/Seafood_Btn.png"
-      ></app-custom-card>
-      <app-custom-card
-        style="flex: 1;"
-        title="Another Workhard here are."
-      ></app-custom-card>
-      <app-custom-card
-        style="flex: 1;"
-        title="Another Workhard here are."
-      ></app-custom-card>
-      <app-custom-card
-        style="flex: 1;"
-        title="Another Workhard here are."
-      ></app-custom-card> -->
+    <div style=" margin: 20px 0;">
+      <app-dc-grid></app-dc-grid>
     </div>
   `,
   styles: [`

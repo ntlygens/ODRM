@@ -6,7 +6,6 @@ import { WorkRoutingModule } from './work-routing-module';
 import { WorkPg } from './work-pg';
 import { WorkLandingPg } from './work-landing-pg';
 import { JumboTronComponent, JumbotronDemoComponent } from '../core-comps/jumbo-tron';
-import { CustomCardComponent } from '../core-comps/custom_card_component';
 
 @NgModule({
   declarations: [
@@ -17,7 +16,6 @@ import { CustomCardComponent } from '../core-comps/custom_card_component';
     CommonModule,
     CoreCompsModule,
     WorkRoutingModule,
-    CustomCardComponent,
     JumboTronComponent,
     JumbotronDemoComponent,
     NgMatModule
@@ -25,7 +23,6 @@ import { CustomCardComponent } from '../core-comps/custom_card_component';
   exports: [
     WorkPg,
     WorkLandingPg,
-    CustomCardComponent,
     
   ]
 })

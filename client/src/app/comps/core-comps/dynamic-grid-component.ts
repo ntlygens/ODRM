@@ -25,47 +25,20 @@ import { CardItem, GridItem, Orientation } from './dynamic-grid-enum';
           [rowspan]="item.rows">
           
           @if(!item.isPlaceholder) {
-            <odm-dynemic-card 
+            <odm-dynamic-card 
               [cardData]="item.data"
               [isPlaceholder]="false"
               [style.width.%]="100"
               [style.height.%]="100">
-            </odm-dynemic-card>
-
-            <!-- <mat-grid-tile-header> Title is: {{item.data?.title}}</mat-grid-tile-header>
-            <div>
-              <img [src]="item.data?.imgUrl">
-            </div> -->
-          
+            </odm-dynamic-card>
+        
           } @else {
-            <odm-dynemic-card [isPlaceholder]="true"></odm-dynemic-card>
+            <odm-custom-card [isPlaceholder]="true"></odm-custom-card>
           }
         
         </mat-grid-tile>
       }
       
-      <!-- <mat-grid-tile 
-        *ngFor="let item of gridItems; trackBy: trackByFn"
-        [colspan]="item.cols"
-        [rowspan]="item.rows">
-        <odm-dynemic-card *ngIf="!isPlaceholder"
-          [cardData]!="item.data"
-          [isPlaceholder]="item.isPlaceholder"
-          [style.width.%]="100"
-          [style.height.%]="100">
-        </odm-dynemic-card>
-
-        @if(!item.isPlaceholder) {
-          <odm-dynemic-card 
-            [cardData]!="item.data"
-            [style.width.%]="100"
-            [style.height.%]="100">
-          </odm-dynemic-card>
-        
-        }
-        <odm-dynemic-card [isPlaceholder]="true"></odm-dynemic-card>
-        
-      </mat-grid-tile> -->
     </mat-grid-list>
   `,
   styles: [`
@@ -92,7 +65,6 @@ export class DynamicGridComponent implements OnInit, AfterViewInit, AfterContent
   gridItems: GridItem[] = [];
   
   private n = 0;
-  private orientations: string[] = [];
   private oriented = '';
 
   ngOnInit() {
@@ -101,16 +73,16 @@ export class DynamicGridComponent implements OnInit, AfterViewInit, AfterContent
   }
 
   ngAfterViewInit() {
-    // this.calculateGridLayout();
+    this.calculateGridLayout();
 
     window.addEventListener('resize', () => {
       this.calculateColumns();
-      // this.calculateGridLayout();
+      this.calculateGridLayout();
     });
   }
 
   ngAfterContentInit() {
-    this.calculateGridLayout();
+    // this.calculateGridLayout();
   }
 
   private calculateColumns() {  
@@ -122,7 +94,7 @@ export class DynamicGridComponent implements OnInit, AfterViewInit, AfterContent
     } else if (width > 1024 && width < 1280) {
       this.columns = 4;
     } else {
-      this.columns = 4;
+      this.columns = this.columns || 6;
     }
   } 
 
@@ -220,7 +192,7 @@ export class DynamicGridComponent implements OnInit, AfterViewInit, AfterContent
     return orientations;
   }
 
-  private async detectImageOrientation(url: string): Promise<string> {
+  private detectImageOrientation(url: string): Promise<string> {
     // console.log('detectImageOrientation called for URL:', url);
     const dUrl = new URL(url, window.location.href);
     const sParams = new URLSearchParams(dUrl.search);
